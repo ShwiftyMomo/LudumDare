@@ -13,3 +13,7 @@ class Job:
         for item in self.items:
             I+= "\t" + item + "\n"
         return I
+
+Jobs=[
+    Job("Warrior",25,125,["Sword","Healing Potion","Light Armor"])
+]

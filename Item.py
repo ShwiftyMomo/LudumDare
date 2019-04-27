@@ -38,3 +38,11 @@ class Item:
 
         I+=self.blurb
         return I
+
+
+Items=[
+    Item("Sword",20,"The original, a sword.","weapon"),
+    Item("Light Armor",10,"A wee bit of protection is better than none at all.","armor"),
+    Item("Healing Potion",["hp",50],"Recovering health is quite important when at 1 hp.","consumable"),
+    Item("Knife",10,"It's really just a small sword.","weapon")
+]
