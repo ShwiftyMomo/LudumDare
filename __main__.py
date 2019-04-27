@@ -10,6 +10,6 @@ P=Player()
 P.intro()
 
 
-Running=True
-while Running:
+
+while True:
     B.turn(P)

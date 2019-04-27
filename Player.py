@@ -35,7 +35,7 @@ class Player:
         self.dmg=MyJob.dmg
         self.hp=MyJob.hp
         self.hpMax=MyJob.hp
-        self.items=MyJobItems
+        self.items=[]
         for item in MyJobItems:
             if item.mode=="weapon":
                 self.weapon=item
@@ -43,6 +43,7 @@ class Player:
                 self.armor=item
             if item.mode=="consumable":
                 self.consumables+=[item]
+                self.items+=[item]
 
         print("\n")
         self.name = input("What is your character's name? ")
@@ -60,7 +61,9 @@ class Player:
         I= "--"+self.name+"-- \n"
         I+= "Damage: "+str(self.dmg)+"\n"
         I+= "Health: "+str(self.hp)+"/"+str(self.hpMax)+"\n"
-        I+= "Items: \n"
+        I+= "Active Weapon: "+str(self.weapon.name)+"\n"
+        I+= "Active Armor: "+str(self.armor.name)+"\n"
+        I+= "Inventory: \n"
         for item in self.items:
             I+= "\t" + item.name + "\n"
         return I

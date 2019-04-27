@@ -23,7 +23,7 @@ class Item:
             I+= "Damage: "+str(self.dmg)+"\n"
 
         if self.mode == "armor":
-            I+= "Defence: "+str(self.hp)+"\n"
+            I+= "Defence: "+str(self.arm)+"\n"
 
         if self.mode == "consumable":
             I+="This consumable "
@@ -44,5 +44,7 @@ Items=[
     Item("Sword",20,"The original, a sword.","weapon"),
     Item("Light Armor",10,"A wee bit of protection is better than none at all.","armor"),
     Item("Healing Potion",["hp",50],"Recovering health is quite important when at 1 hp.","consumable"),
-    Item("Knife",10,"It's really just a small sword.","weapon")
+    Item("Knife",10,"It's really just a small sword.","weapon"),
+    Item("Magic Wand",45,"Doin' it Harry Potter style.","weapon"),
+    Item("Robes",5,"Honestly, im not sure if it counts as real armor.","armor")
 ]

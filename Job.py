@@ -16,5 +16,6 @@ class Job:
 
 
 Jobs=[
-    Job("Warrior",25,125,["Sword","Healing Potion","Light Armor"])
+    Job("Warrior",25,125,["Sword","Healing Potion","Light Armor"]),
+    Job("Wizard",10,75,["Magic Wand","Healing Potion","Robes"])
 ]
