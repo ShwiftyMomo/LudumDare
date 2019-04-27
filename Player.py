@@ -10,7 +10,7 @@ class Player:
         self.consumables=[]
         self.specials=[]
         self.name=None
-        self.pos="Start"
+        self.pos="start"
         self.hp=None
 
 

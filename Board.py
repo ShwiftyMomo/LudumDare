@@ -5,6 +5,7 @@ class Board:
     def __init__(self):
         self.enemies=[]
         self.events=[Event("Start")]
+        self.locations=["start","forest"]
         self.Done=True
 
     def turn(self,P):
@@ -25,6 +26,7 @@ class Board:
                 I+="(a)ttack: attack enemies \n"
                 I+="(q)uit: leave the game \n"
                 I+="(u)se + consumable: consume the consumable \n"
+                I+="(w)alk + location: change location"
                 print(I)
                 self.Done=False
 
@@ -141,6 +143,21 @@ class Board:
 
                         print(I)
 
+                        self.Done=False
+
+            if move.split(" ")[0] == "walk" or move.split(" ")[0] == "w":
+
+                if len(move.split(" ")) !=1:
+                    Str=""
+
+                    for i in move.split(" ")[1:]:
+                        Str+=i+" "
+
+                    Str=Str[:-1]
+
+                    if Str in self.locations:
+                        P.pos=Str
+                        print("You moved to the "+Str+".")
                         self.Done=False
 
             for event in self.events:
