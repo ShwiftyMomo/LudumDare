@@ -1,10 +1,11 @@
 from Enemy import Enemy
 from Item import Item
+from King import King
 
 class Board:
     def __init__(self):
         self.enemies=[]
-        self.events=[Event("Start"),Event("Forest")]
+        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden")]
         self.locations=["start","forest"]
         self.Done=True
 
@@ -20,7 +21,7 @@ class Board:
             if move == "help" or move == "h":
                 self.Help(P)
             if move == "location" or move == "l":
-                self.Location(P,move)
+                self.Location(P)
 
             if move == "attack" or move == "a":
                 self.Attack(P)
@@ -33,14 +34,17 @@ class Board:
             if move.split(" ")[0] == "examine" or move.split(" ")[0] == "x":
                 self.Examine(P,move)
 
-            if move == "quit" or move == "q":
-                self.Quit(P)
+            if move == "exit" or move == "e":
+                self.Exit(P)
 
             if move.split(" ")[0] == "use" or move.split(" ")[0] == "u":
                 self.Use(P,move)
 
             if move.split(" ")[0] == "walk" or move.split(" ")[0] == "w":
                 self.Walk(P,move)
+
+            if move == "talk" or move == "t":
+                self.Talk(P)
 
             for event in self.events:
 
@@ -60,9 +64,12 @@ class Board:
         I+="e(x)amine + item: examine an item you possess \n"
         I+="e(x)amine + enemy: examine an enemy you are fighting \n"
         I+="(a)ttack: attack enemies \n"
-        I+="(q)uit: leave the game \n"
+        I+="(e)xit: leave the game \n"
         I+="(u)se + consumable: consume the consumable \n"
-        I+="(w)alk + location: change location"
+        if self.events[0].body!=[False,False]:
+            I+="(w)alk + location: change location \n"
+        if self.events[1].body!=[False,False]:
+            I+="(t)alk: talk to whoever is in your location \n"
         print(I)
         self.Done=False
 
@@ -74,39 +81,40 @@ class Board:
         if self.enemies == []:
             print("There are no enemies to attack." + "\n")
 
-        I="Which enemy do you want to attack: \n"
+        else:
+            I="Which enemy do you want to attack: \n"
 
-        for enemy in self.enemies:
-            I+="\t" + enemy.name +"\n"
+            for enemy in self.enemies:
+                I+="\t" + enemy.name +"\n"
 
-        I+="\n"
+            I+="\n"
 
-        Enem = input(I)
-
-        while Enem not in [enemy.name for enemy in self.enemies]:
-            print("That isin't one of the choices. \n")
             Enem = input(I)
 
-        Enem = self.enemies[[enemy.name for enemy in self.enemies].index(Enem)]
+            while Enem not in [enemy.name for enemy in self.enemies]:
+                print("That isin't one of the choices. \n")
+                Enem = input(I)
 
-        Enem.hp-=Item(P.weapon).dmg+P.dmg
+            Enem = self.enemies[[enemy.name for enemy in self.enemies].index(Enem)]
 
-        print("\n")
-        print("You dealt " + Enem.name + " "+str(Item(P.weapon).dmg+P.dmg) + " damage!")
+            Enem.hp-=Item(P.weapon).dmg+P.dmg
 
-        if Enem.hp<=0:
-            print("You killed " + Enem.name +"!")
-            print("You got "+str(Enem.xp)+" experience points!")
-            P.xp+=Enem.xp
-            if P.xp>2**(3+P.lv):
-                P.Up()
-            self.enemies.remove(Enem)
+            print("\n")
+            print("You dealt " + Enem.name + " "+str(Item(P.weapon).dmg+P.dmg) + " damage!")
+
+            if Enem.hp<=0:
+                print("You killed " + Enem.name +"!")
+                print("You got "+str(Enem.xp)+" experience points!")
+                P.xp+=Enem.xp
+                if P.xp>=2**(3+P.lv):
+                    P.Up()
+                self.enemies.remove(Enem)
 
 
-        if len(self.enemies)==0:
-            print("There are no more enemies left.")
+            if len(self.enemies)==0:
+                print("There are no more enemies left.")
 
-        print("\n")
+            print("\n")
 
         self.Done=False
 
@@ -131,7 +139,7 @@ class Board:
                 print(str(self.enemies[[enemy.name for enemy in self.enemies].index(Str)])+"\n")
                 self.Done=False
 
-    def Quit(self,P):
+    def Exit(self,P):
         print("Thanks for having played my game!")
         self.Done=False
         exit()
@@ -197,6 +205,10 @@ class Board:
                     print("You moved to the "+Str+".")
                     self.Done=False
 
+    def Talk(self,P):
+        King().talk(P,self)
+        self.Done=False
+
 class Event:
     def __init__(self,name):
         self.name=name
@@ -222,6 +234,10 @@ class Event:
                 self.body[0]=True
 
                 print("The forest is dark and gloomy.")
+                print("A large figure approaches you.")
+                print("Goblin King: I am the king of these lands.")
+                print("Goblin King: If you wish to stay alive, you must complete my quests.")
+                print("Type 'talk' to talk whoever is in your location. \n")
 
 
     def run(self,move,B,P):
