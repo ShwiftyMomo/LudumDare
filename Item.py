@@ -1,6 +1,11 @@
 class Item:
     def __init__(self,mode):
         self.name=mode
+        self.dmg=-1
+        self.arm=-1
+        self.blurb="Blurb"
+        self.mode="Mode"
+        self.effect=["Word",0]
 
         if mode=="Sword":
             self.dmg=20
@@ -8,7 +13,7 @@ class Item:
             self.mode="weapon"
 
         if mode=="Light Armor":
-            self.arm=10
+            self.arm=1.5
             self.blurb="A wee bit of protection is better than none at all."
             self.mode="armor"
 
@@ -22,13 +27,18 @@ class Item:
             self.blurb="The original, a sword."
             self.mode="weapon"
 
+        if mode=="Knife":
+            self.dmg=10
+            self.blurb="A small shank. For shanking purposes."
+            self.mode="weapon"
+
         if mode=="Magic Wand":
             self.dmg=45
             self.blurb="Doin' it Harry Potter style."
             self.mode="weapon"
 
         if mode=="Robes":
-            self.arm=10
+            self.arm=1.1
             self.blurb="Honestly, im not sure if it counts as real armor."
             self.mode="armor"
 
