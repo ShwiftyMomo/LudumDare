@@ -2,7 +2,7 @@ from Player import Player
 
 class King:
 	def __init__(self):
-		self.deals=["Strengh"]
+		self.deals=["Strength"]
 		self.quests=["Clean Garden"]
 
 	def talk(self,P,B):
@@ -34,7 +34,7 @@ class Pact:
 	def __init__(self,name):
 		self.name=name
 
-		if name == "Strengh":
+		if name == "Strength":
 			self.cost=25
 			self.blurb="Increase strength"
 	
@@ -43,7 +43,7 @@ class Pact:
 		if P.hp>P.hpMax:
 			P.hp=P.hpMax
 
-		if self.name == "Strengh":
+		if self.name == "Strength":
 			P.dmg+=15
 
 	def __str__(self):

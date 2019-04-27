@@ -60,7 +60,7 @@ class Player:
         print("Type 'help' to see all possible moves. \n")
 
     def Up(self):
-        self.xp-=2**(3+self.lv)
+        self.xp-=2**(2+self.lv)
         self.lv+=1
         print("You are now level "+str(self.lv)+"!")
         print("Your damage increased by 5!")

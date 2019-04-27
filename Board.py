@@ -106,7 +106,7 @@ class Board:
                 print("You killed " + Enem.name +"!")
                 print("You got "+str(Enem.xp)+" experience points!")
                 P.xp+=Enem.xp
-                if P.xp>=2**(3+P.lv):
+                if P.xp>=2**(2+P.lv):
                     P.Up()
                 self.enemies.remove(Enem)
 
