@@ -12,6 +12,8 @@ class Player:
         self.name=None
         self.pos="start"
         self.hp=None
+        self.lv=1
+        self.xp=0
 
 
         self.hpMax=None
@@ -57,10 +59,18 @@ class Player:
         print("Type 'start game' when you are ready to begin.")
         print("Type 'help' to see all possible moves. \n")
 
+    def Up(self):
+        self.xp-=2**(3+self.lv)
+        self.lv+=1
+        print("You are now level "+str(self.lv)+"!")
+        print("Your damage increased by 5!")
+        print("Your health increased by 10!\n")
 
 
     def __str__(self):
         I= "--"+self.name+"-- \n"
+        I+= "Lv."+str(self.lv)+" "+self.job +"\n"
+        I+= "Experience points: "+str(self.xp)+"/"+str(2**(2+self.lv))+"\n"
         I+= "Damage: "+str(self.dmg)+"\n"
         I+= "Health: "+str(self.hp)+"/"+str(self.hpMax)+"\n"
         I+= "Active Weapon: "+str(Item(self.weapon).name)+"\n"

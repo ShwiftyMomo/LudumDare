@@ -4,7 +4,7 @@ from Item import Item
 class Board:
     def __init__(self):
         self.enemies=[]
-        self.events=[Event("Start"),Event("forest")]
+        self.events=[Event("Start"),Event("Forest")]
         self.locations=["start","forest"]
         self.Done=True
 
@@ -45,10 +45,10 @@ class Board:
             for event in self.events:
 
                 if event.body==[False,False]:
-                    event.test(move,self)
+                    event.test(move,self,P)
 
                 if event.body==[True,False]:
-                    event.run(move,self)
+                    event.run(move,self,P)
 
             if self.Done:
                 print("That is not a valid move, please try again")
@@ -96,6 +96,10 @@ class Board:
 
         if Enem.hp<=0:
             print("You killed " + Enem.name +"!")
+            print("You got "+str(Enem.xp)+" experience points!")
+            P.xp+=Enem.xp
+            if P.xp>2**(3+P.lv):
+                P.Up()
             self.enemies.remove(Enem)
 
 
@@ -185,16 +189,20 @@ class Board:
             Str=Str[:-1]
 
             if Str in self.locations:
-                P.pos=Str
-                print("You moved to the "+Str+".")
-                self.Done=False
+                if self.enemies !=[]:
+                    print("You can't run away from a fight!")
+
+                else:
+                    P.pos=Str
+                    print("You moved to the "+Str+".")
+                    self.Done=False
 
 class Event:
     def __init__(self,name):
         self.name=name
         self.body=[False,False]
 
-    def test(self,move,B):
+    def test(self,move,B,P):
 
         if self.name=="Start":
 
@@ -208,7 +216,15 @@ class Event:
 
                 B.Done=False
 
-    def run(self,move,B):
+        if self.name=="Forest":
+
+            if P.pos=="forest":
+                self.body[0]=True
+
+                print("The forest is dark and gloomy.")
+
+
+    def run(self,move,B,P):
 
         if self.name=="Start":
 
