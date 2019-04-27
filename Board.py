@@ -1,6 +1,10 @@
+from Enemy import Enemy
+from Item import Item
+
 class Board:
     def __init__(self):
         self.enemies=[]
+        self.events=[Event("Start")]
 
     def turn(self,P):
         move=input()
@@ -15,9 +19,11 @@ class Board:
             print(I)
 
         if move == "location" or move == "l":
-            print(P.pos +"\n")
+
+            print("You are currently at: The " + P.pos +"\n")
 
         if move == "info" or move == "i":
+
             print(P)
 
         if move.split(" ")[0] == "examine" or move.split(" ")[0] == "x":
@@ -28,10 +34,41 @@ class Board:
 
             Str=Str[:-1]
 
-            item=P.items[[item.name for item in P.items].index(Str)]
-
-            print(item)
+            if Str in P.items or Str==P.weapon or Str==P.armor:
+                print(str(Item(Str))+"\n")
 
         if move == "quit" or move == "q":
             print("Thanks for having played my game!")
             exit()
+
+
+
+        for event in self.events:
+
+            if event.body==[False,False]:
+                event.test(move,self)
+
+            if event.body==[True,False]:
+                event.run(move,self)
+
+class Event:
+    def __init__(self,name):
+        self.name=name
+        self.body=[False,False]
+
+    def test(self,move,B):
+
+        if self.name=="Start":
+
+            if move == "start game":
+                self.body[0]=True
+
+    def run(self,move,B):
+
+        if self.name=="Start":
+            
+            if B.enemies==[]:
+                print("You see two marauding goblins approaching! \n")
+                print("Type (a)ttack to fight them, before they get you! \n")
+
+                B.enemies=[Enemy("Goblin1","Goblin"),Enemy("Goblin2","Goblin")]

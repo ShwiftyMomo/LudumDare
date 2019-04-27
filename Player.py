@@ -1,5 +1,5 @@
-from Job import Jobs
-from Item import Items
+from Job import Job
+from Item import Item
 
 class Player:
     def __init__(self):
@@ -19,29 +19,28 @@ class Player:
         print("Welcome to the game!")
         print("Here are the possible classes: \n")
 
-        for job in Jobs:
-            print(job)
+        print(Job("Warrior"))
+        print(Job("Wizard"))
 
         MyJob=input("Which class do you want to be? ")
 
-        while MyJob not in [J.name for J in Jobs]:
+        while Job(MyJob).dmg==None:
             print("Sorry, that isn't a possible class. \n")
             MyJob=input("Which class do you want to be? ")
 
-        MyJob=Jobs[[J.name for J in Jobs].index(MyJob)]
+        MyJob=Job(MyJob)
 
-        MyJobItems=[Items[[item.name for item in Items].index(I)] for I in MyJob.items]
         self.job=MyJob.name
         self.dmg=MyJob.dmg
         self.hp=MyJob.hp
         self.hpMax=MyJob.hp
         self.items=[]
-        for item in MyJobItems:
-            if item.mode=="weapon":
+        for item in MyJob.items:
+            if Item(item).mode=="weapon":
                 self.weapon=item
-            if item.mode=="armor":
+            if Item(item).mode=="armor":
                 self.armor=item
-            if item.mode=="consumable":
+            if Item(item).mode=="consumable":
                 self.consumables+=[item]
                 self.items+=[item]
 
@@ -53,6 +52,7 @@ class Player:
         print(self)
 
         print("Every turn you will type the action you want to preform.")
+        print("Type 'start game' when you are ready to begin.")
         print("Type 'help' to see all possible moves. \n")
 
 
@@ -61,10 +61,10 @@ class Player:
         I= "--"+self.name+"-- \n"
         I+= "Damage: "+str(self.dmg)+"\n"
         I+= "Health: "+str(self.hp)+"/"+str(self.hpMax)+"\n"
-        I+= "Active Weapon: "+str(self.weapon.name)+"\n"
-        I+= "Active Armor: "+str(self.armor.name)+"\n"
+        I+= "Active Weapon: "+str(Item(self.weapon).name)+"\n"
+        I+= "Active Armor: "+str(Item(self.armor).name)+"\n"
         I+= "Inventory: \n"
         for item in self.items:
-            I+= "\t" + item.name + "\n"
+            I+= "\t" + item + "\n"
         return I
         

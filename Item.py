@@ -1,18 +1,36 @@
 class Item:
-    def __init__(self,name,effect,blurb,mode):
-        self.name=name
-        self.dmg=None
-        self.arm=None
-        self.effect=None
-        self.blurb=blurb
-        self.mode=mode
+    def __init__(self,mode):
+        self.name=mode
 
-        if mode=="weapon":
-            self.dmg=effect
-        if mode=="armor":
-            self.arm=effect
-        if mode=="consumable":
-            self.effect=effect
+        if mode=="Sword":
+            self.dmg=20
+            self.blurb="The original, a sword."
+            self.mode="weapon"
+
+        if mode=="Light Armor":
+            self.arm=10
+            self.blurb="A wee bit of protection is better than none at all."
+            self.mode="armor"
+
+        if mode=="Healing Potion":
+            self.effect=["hp",50]
+            self.blurb="Recovering health is quite important when at 1 hp."
+            self.mode="consumable"
+
+        if mode=="Sword":
+            self.dmg=20
+            self.blurb="The original, a sword."
+            self.mode="weapon"
+
+        if mode=="Magic Wand":
+            self.dmg=45
+            self.blurb="Doin' it Harry Potter style."
+            self.mode="weapon"
+
+        if mode=="Robes":
+            self.arm=10
+            self.blurb="Honestly, im not sure if it counts as real armor."
+            self.mode="armor"
 
     def __str__(self):
         I= "--"+self.name+"-- \n"
@@ -39,12 +57,3 @@ class Item:
         I+=self.blurb
         return I
 
-
-Items=[
-    Item("Sword",20,"The original, a sword.","weapon"),
-    Item("Light Armor",10,"A wee bit of protection is better than none at all.","armor"),
-    Item("Healing Potion",["hp",50],"Recovering health is quite important when at 1 hp.","consumable"),
-    Item("Knife",10,"It's really just a small sword.","weapon"),
-    Item("Magic Wand",45,"Doin' it Harry Potter style.","weapon"),
-    Item("Robes",5,"Honestly, im not sure if it counts as real armor.","armor")
-]

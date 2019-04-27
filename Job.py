@@ -1,9 +1,20 @@
 class Job:
-    def __init__(self,name,dmg,hp,items):
-        self.name=name
-        self.dmg=dmg
-        self.hp=hp
-        self.items=items
+    def __init__(self,part):
+        self.name=part
+        self.dmg=None
+        self.hp=None
+        self.items=["Easter Egg"]
+        if part=="Warrior":
+            self.dmg=25
+            self.hp=125
+            self.items=["Sword","Healing Potion","Light Armor"]
+
+        if part=="Wizard":
+            self.dmg=10
+            self.hp=75
+            self.items=["Magic Wand","Healing Potion","Robes"]
+
+
 
     def __str__(self):
         I= "--"+self.name+"-- \n"
@@ -14,8 +25,3 @@ class Job:
             I+= "\t" + item + "\n"
         return I
 
-
-Jobs=[
-    Job("Warrior",25,125,["Sword","Healing Potion","Light Armor"]),
-    Job("Wizard",10,75,["Magic Wand","Healing Potion","Robes"])
-]
