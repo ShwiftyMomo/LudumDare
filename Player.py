@@ -12,6 +12,8 @@ class Player:
         self.name=None
         self.pos="Start"
         self.hp=None
+
+
         self.hpMax=None
         self.dmg=None
 

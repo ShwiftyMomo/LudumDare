@@ -12,16 +12,19 @@ class Board:
 
         self.Done=True
         while self.Done:
+
             move=input("Your move: ")
             print("\n")
-            if move == "help":
+
+            if move == "help" or move == "h":
                 I="(h)elp: see all possible actions \n"
                 I+="(l)ocation: see current location \n"
                 I+="(i)nfo: see all your stats \n"
                 I+="e(x)amine + item: examine an item you possess \n"
                 I+="e(x)amine + enemy: examine an enemy you are fighting \n"
-                I+="(a)ttack: attack enemies"
+                I+="(a)ttack: attack enemies \n"
                 I+="(q)uit: leave the game \n"
+                I+="(u)se + consumable: consume the consumable \n"
                 print(I)
                 self.Done=False
 
@@ -56,8 +59,7 @@ class Board:
 
                 if Enem.hp<=0:
                     print("You killed " + Enem.name +"!")
-                    Index=[enemy.name for enemy in self.enemies].index(Enem.name)
-                    self.enemies=self.enemies[:Index]+self.enemies[Index+1:]
+                    self.enemies.remove(Enem)
 
 
                 if len(self.enemies)==0:
@@ -66,10 +68,10 @@ class Board:
                 print("\n")
 
                 for enemy in self.enemies:
-                    print(enemy.name + " dealt you "+str(int((enemy.dmg+Item(enemy.weapon).dmg)/Item(P.armor).arm))+" damage.")
-                    P.hp-=int((enemy.dmg+Item(enemy.weapon).dmg)/Item(P.armor).arm)
+                    enemy.attack(P)
 
                 self.Done=False
+
             if move == "info" or move == "i":
                 print(P)
                 self.Done=False
@@ -97,7 +99,49 @@ class Board:
                 self.Done=False
                 exit()
 
+            if move.split(" ")[0] == "use" or move.split(" ")[0] == "u":
 
+                if len(move.split(" ")) !=1:
+                    Str=""
+
+                    for i in move.split(" ")[1:]:
+                        Str+=i+" "
+
+                    Str=Str[:-1]
+
+                    if Str in P.consumables:
+                        P.consumables.remove(Str)
+
+                        if Item(Str).effect[0]=="hp":
+                            I="hp"
+
+                            num=Item(Str).effect[1]
+
+                            P.hp+=num
+
+                            if P.hp>P.hpMax:
+                                P.hp=P.hpMax
+
+                        if Item(Str).effect[0]=="hpMax":
+                            I="Maximum hp"
+
+                            num=Item(Str).effect[1]
+
+                            P.hpMax+=num
+
+                        if num>0:
+                            I+=" increased by "
+
+                        if num<0:
+                            I+=" decreased by "
+
+                        I+= str(abs(num))
+
+                        I+="."
+
+                        print(I)
+
+                        self.Done=False
 
             for event in self.events:
 
