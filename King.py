@@ -29,8 +29,6 @@ class King:
 				self.quests.remove(move)
 
 			print("You have decided to embark on the '"+move+"' quest!\n")
-			
-
 
 class Pact:
 	def __init__(self,name):
@@ -42,6 +40,8 @@ class Pact:
 	
 	def run(self,P):
 		P.hpMax-=self.cost
+		if P.hp>P.hpMax:
+			P.hp=P.hpMax
 
 		if self.name == "Strengh":
 			P.dmg+=15
