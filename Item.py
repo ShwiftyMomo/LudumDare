@@ -26,7 +26,7 @@ class Item:
             I+= "Defence: "+str(self.hp)+"\n"
 
         if self.mode == "consumable":
-            I+="This consumable"
+            I+="This consumable "
 
             if self.effect[1]>0:
                 I+="increases "

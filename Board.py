@@ -7,27 +7,31 @@ class Board:
         print("\n")
 
         if move == "help":
-            I="help: see all possible actions \n"
-            I+="location: see current location \n"
-            I+="info: see all your stats \n"
-            I+="examine + item: examine an item you possess \n"
+            I="(h)elp: see all possible actions \n"
+            I+="(l)ocation: see current location \n"
+            I+="(i)nfo: see all your stats \n"
+            I+="(e)xamine + item: examine an item you possess \n"
+            I+="(q)uit: leave the game"
             print(I)
 
-        if move == "location":
+        if move == "location" or move == "l":
             print(P.pos +"\n")
 
-        if move == "info":
+        if move == "info" or move == "i":
             print(P)
 
-        if move.split(" ")[0] == "examine":
+        if move.split(" ")[0] == "examine" or move.split(" ")[0] == "e":
             Str=""
+
             for i in move.split(" ")[1:]:
-                Str+=i
+                Str+=i+" "
+
+            Str=Str[:-1]
 
             item=P.items[[item.name for item in P.items].index(Str)]
 
             print(item)
 
-        if move == "exit":
+        if move == "quit" or move == "q":
             print("Thanks for playing my game!")
             Running=False

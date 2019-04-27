@@ -1,5 +1,6 @@
 from Job import Jobs
 from Item import Items
+
 class Player:
     def __init__(self):
         self.job=None
@@ -51,7 +52,7 @@ class Player:
         print(self)
 
         print("Every turn you will type the action you want to preform.")
-        print("Type 'help' to see all possible moves. +\n")
+        print("Type 'help' to see all possible moves. \n")
 
 
 
