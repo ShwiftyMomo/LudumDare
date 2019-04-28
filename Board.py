@@ -2,15 +2,17 @@ from Enemy import Enemy
 from Item import Item
 from King import King
 from NPC import NPC
+
 class Board:
     def __init__(self):
         self.enemies=[]
-        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden")]
+        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown")]
         self.locations=["start"]
         self.person=[]
         self.Done=True
         self.King=King()
         self.Gardener=NPC("Gardener")
+        self.Blacksmith=NPC("Blacksmith")
 
     def turn(self,P):
         print("\n")
@@ -230,6 +232,10 @@ class Board:
                     P.pos=Str
                     print("You moved to the "+Str+".")
 
+                    if Str == "forge":
+                        self.person=[self.Blacksmith]
+                        print("The forge is hot and fiery.")
+
                     if Str == "garden":
                         self.person=[self.Gardener]
                         print("The garden is nice are welcoming.")
@@ -240,6 +246,7 @@ class Board:
 
                     if Str=="start":
                         self.person=[]
+                        print("You see an easter egg on the ground.")
 
                     self.Done=False
 

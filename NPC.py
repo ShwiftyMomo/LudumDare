@@ -11,6 +11,11 @@ class NPC:
 			self.dmg=5
 			self.xp=15
 
+		if name=="Blacksmith":
+			self.hp=150
+			self.dmg=5
+			self.xp=25
+
 	def ask(self,Questions):
 		I=""
 		for i in range(len(Questions)):
@@ -157,7 +162,79 @@ class NPC:
 								O2="Yes."
 								O3="Dude, that's deep."
 								Op3=self.ask([O1,O2,O3])
-			
+
+
+		if self.name=="Blacksmith":
+			if self.stage ==1 or self.stage ==2:
+
+					if self.stage ==1:
+						self.stage=2
+						print("Blacksmith: Haven't seen you around here.")
+						print("Blacksmith: What you here for?")
+
+					if self.stage ==2:
+						print("Blacksmith: You got something to say?")
+
+					O1="Could I get a crown for the Goblin King?"
+					O2="How could I, say, kill the Goblin King?"
+					O3="Do us humans have free will?"
+					Op1=self.ask([O1,O2,O3])
+
+					if Op1==1:
+						print("Blacksmith: Oh, that's what your here for.")
+						print("Blacksmith: When making it for him a dropped it in a pit of spiders.")
+						print("Blacksmith: So you'll have to deal with that.")
+
+						O1= "Oh HELL no. I'm an arachnophobe."
+						O2= "Well... I'll do it anyway."
+						O3= "Dude, I eat spiders for breakfast"
+						Op2=self.ask([O1,O2,O3])
+
+						if Op2==2 or Op2==3:
+							print("Blacksmith: Well it's your lucky day then.")
+							B.enemies+=[Enemy("Spider Den","Horde")]
+
+					if Op1==2:
+						print("Blacksmith: I once forged a blade that could kill any goblin it touched...")
+						print("Blacksmith: But I went backpacking and lost it.")
+						print("Blacksmith: You could try to find it, I guess.")
+
+						O1="Goddamit."
+						O2="Where did you lose it?"
+						O3="Sounds like a 'you' problem."
+						Op2=self.ask([O1,O2,O3])
+
+						if Op2==2:
+							print("Blaksmith: Deep in a cave, but I'm not sure exactly where.")
+
+					if Op1=3:
+						print("Blacksmith: Generally people rebut free will with determinism.")
+						print("Blacksmith: But the argument is flawed.")
+						print("Blacksmith: Determinism meerly means that you would re-do the same decisions.")
+
+						O1="Well at this point the debate is meerly about definitions."
+						O2="You never awnsered the question directly though."
+						O3="Dude... You're tripping."
+						Op2=self.ask([O1,O2,O3])
+
+						if Op2==1:
+							print("Blacksmith: I suppose.")
+							print("Blacksmith: Though some definitions are better than others.")
+							O1="How would you define free will?"
+							O2="Neat."
+							Op3=self.ask([O1,O2])
+
+							if Op3==1:
+								print("Blacksmith: The ability to chose an option based off surroundings.")
+								print("Blacksmith: I guess the question now is what will you chose.")
+
+						if Op2==2:
+							print("Blacksmith: I will awnser with a question.")
+							print("Blacksmith: Do you have free will now?")
+							O1="Yes"
+							Op3=seld.ask([O1])
+						
+
 	def Attack(self,P):
 		print(self.name + " dealt you "+str(int(self.dmg/Item(P.armor).arm))+" damage.")
 		P.hp-=int(self.dmg/Item(P.armor).arm)

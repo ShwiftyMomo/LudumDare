@@ -4,7 +4,7 @@ class King:
 	def __init__(self):
 		self.name = "Goblin King"
 		self.deals=["Strength","Water Breathing"]
-		self.quests=["Clean Garden"]
+		self.quests=["Clean Garden","Get Crown"]
 		self.freind=True
 		self.hp=300
 		self.dmg=50
@@ -36,12 +36,16 @@ class King:
 
 			if move=="Clean Garden":
 				B.events[2].body[0]=True
+				B.locations+=["garden"]
 
-			self.quests.remove(move)
 
-			print("You have decided to embark on the '"+move+"' quest!\n")
-			B.locations+=["garden"]
+			if move=="Get Crown":
+				B.events[3].body[0]=True
+				B.locations+=["forge"]
 
+
+		self.quests.remove(move)
+		print("You have decided to embark on the '"+move+"' quest!\n")
 		B.events[1].body=[False,True]
 
 	def Attack(self,P):
