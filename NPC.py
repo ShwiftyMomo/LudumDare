@@ -1,6 +1,6 @@
 from Player import Player
 from Item import Item
-
+from Enemy import Enemy
 class NPC:
 	def __init__(self,name):
 		self.name = name
@@ -23,9 +23,11 @@ class NPC:
 
 		Enem=input(I)
 		Temp=True
-		if type(Enem)==int:
-			if not(int(Enem)-1 in range(len(Questions))):
+		try:
+			if int(Enem)-1 in range(len(Questions)):
 				Temp=False
+		except ValueError as e:
+			pass
 		while Temp:
 			print("Please enter the number of the option you wish to chose. \n")
 			Enem=input(I)
@@ -190,6 +192,7 @@ class NPC:
 
 						if Op2==2 or Op2==3:
 							print("Blacksmith: Well it's your lucky day then.")
+							print("A horde of spiders come out of the pit to fight you.")
 							B.enemies+=[Enemy("Spider Den","Horde")]
 							self.stage=3
 

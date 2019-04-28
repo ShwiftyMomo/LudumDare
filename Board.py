@@ -2,11 +2,11 @@ from Enemy import Enemy
 from Item import Item
 from King import King
 from NPC import NPC
-
+import time
 class Board:
     def __init__(self):
         self.enemies=[]
-        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown"),Event("Mountain"),Event("Ocean")]
+        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown"),Event("Mountain"),Event("Ocean"),Event("Goblin King")]
         self.locations=["start","mountain","ocean","desert"]
         self.person=[]
         self.Done=True
@@ -60,6 +60,9 @@ class Board:
             if move == "spelunk" or move == "s":
                 self.Spelunk(P)
 
+            if move.split(" ")[0] == "bestow" or move.split(" ")[0] == "b":
+                self.Bestow(P,move)
+
             for event in self.events:
                 if event.body==[False,False]:
                     event.test(move,self,P)
@@ -79,12 +82,13 @@ class Board:
         I+="(a)ttack: attack enemies \n"
         I+="(e)xit: leave the game \n"
         I+="(u)se + consumable: consume the consumable \n"
+        I+="(b)estow + item: set item to your active item \n"
         if self.events[0].body!=[False,False]:
             I+="(w)alk + location: change location \n"
             I+="(m)ap: show all locations \n"
             I+="(t)alk: talk to whoever is in your location \n"
 
-        if self.events[4].body=[False,True]:
+        if self.events[4].body==[False,True]:
             I+="(s)pelunk: explore cave \n"
 
         print(I)
@@ -190,6 +194,7 @@ class Board:
 
             if Str in P.consumables:
                 P.consumables.remove(Str)
+                P.items.remove(Str)
 
                 if Item(Str).effect[0]=="hp":
                     I="hp"
@@ -286,6 +291,7 @@ class Board:
             I+="\t"+l+"\n"
 
         print(I)
+        self.Done=False
 
     def Spelunk(self,P):
         if P.pos!="mountain":
@@ -303,7 +309,33 @@ class Board:
                     print("You pick up a 'KILLER SWORD' at the back of the cave.")
                     P.items+=["KILLER SWORD"]
 
-        print(I)
+        self.Done=False
+
+    def Bestow(self,P,move):
+        if len(move.split(" ")) !=1:
+            Str=""
+
+            for i in move.split(" ")[1:]:
+                Str+=i+" "
+
+            Str=Str[:-1]
+
+            if Str in P.items:
+                if Item(Str).mode=="weapon":
+                    P.items+=[P.weapon]
+                    P.items.remove(Str)
+                    P.weapon=Str
+
+                if Item(Str).mode=="armor":
+                    P.items+=[P.armor]
+                    P.items.remove(Str)
+                    P.armor=Str
+
+                if Item(Str).mode=="consumable":
+                    print("You cannot equip consumables")
+
+                self.Done=False
+
 
 class Event:
     def __init__(self,name):
@@ -334,6 +366,33 @@ class Event:
                 print("Goblin King: If you wish to stay alive, you must complete my quests.")
                 print("Type 'talk' to talk whoever is in your location. \n")
 
+        if self.name=="Goblin King":
+
+            if B.King.hp<=0:
+                print("You have defeated the Goblin King!")
+                time.sleep(5)
+                print("Epilogue:")
+                time.sleep(3)
+                print("The goblin village has gotten a bit better.")
+                time.sleep(3)
+                print("But it is slightly melancholic.")
+                time.sleep(3)
+                print("You have killed the king, but for what.")
+                time.sleep(3)
+                print("All he ever wanted was a freind")
+                time.sleep(3)
+                print("He had started to think that maybe you were a freind.")
+                time.sleep(3)
+                print("You think that he needed you to go on those quests?")
+                time.sleep(3)
+                print("No.")
+                time.sleep(3)
+                print("He just wanted to build a freindship.")
+                time.sleep(3)
+                print("And you killed him.")
+                time.sleep(10)
+                print("I hope you're happy with you 'decision'.")
+                exit()
     def run(self,move,B,P):
 
         if self.name=="Start":
@@ -360,7 +419,7 @@ class Event:
             if B.enemies==[] and B.Blacksmith.stage==3:
                 print("Blacksmith: I guess I'll give you the Crown now.")
                 print("Blacksmith: As a bonus, I'll give you better gear.")
-                print("Blacksmith: Type 'equip' then an item to make it your active item.")
+                print("Blacksmith: Type 'bestow' then an item to make it your active item.")
                 P.items+=["Medium Armor","Axe"]
                 self.body=[False,True]
 

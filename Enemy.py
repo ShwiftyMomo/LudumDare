@@ -11,7 +11,7 @@ class Enemy:
             self.xp=5
 
         if part == "Horde":
-            self.dmg=30
+            self.dmg=20
             self.hpMax=100
             self.hp=100
             self.weapon="Mass"
