@@ -6,8 +6,9 @@ import time
 class Board:
     def __init__(self):
         self.enemies=[]
-        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown"),Event("Mountain"),Event("Ocean"),Event("Goblin King")]
-        self.locations=["start","mountain","ocean","desert"]
+        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown")]
+        self.events+=[Event("Mountain"),Event("Ocean"),Event("Goblin King")]
+        self.locations=["start","ocean","desert"]
         self.person=[]
         self.Done=True
         self.King=King()
@@ -60,6 +61,9 @@ class Board:
             if move == "spelunk" or move == "s":
                 self.Spelunk(P)
 
+            if move == "dive" or move == "d":
+                self.Dive(P)
+
             if move.split(" ")[0] == "bestow" or move.split(" ")[0] == "b":
                 self.Bestow(P,move)
 
@@ -90,6 +94,9 @@ class Board:
 
         if self.events[4].body==[False,True]:
             I+="(s)pelunk: explore cave \n"
+
+        if self.events[5].body==[False,True]:
+            I+="(d)ive: explore ocean \n"
 
         print(I)
         self.Done=False
@@ -124,6 +131,10 @@ class Board:
 
             if Enem in [people.name for people in self.person]:
                 Enem=self.person[[people.name for people in self.person].index(Enem)]
+
+                if Enem==self.King and P.weapon="Freindship Bracelet":
+                    self.ending()
+
                 if Enem.freind:
                     print("You got "+Enem.name+" angry!")
                 Enem.freind=False
@@ -244,6 +255,12 @@ class Board:
                     P.pos=Str
                     print("You moved to the "+Str+".")
 
+                    if Str == "ocean":
+                        self.person=[]
+                        print("The ocean is large and blue.")
+                        if self.events[5].body==[False,False]:
+                            self.events[5].body=[False,True]
+
                     if Str == "mountain":
                         self.person=[]
                         print("The mountain is tall and cold.")
@@ -336,6 +353,48 @@ class Board:
 
                 self.Done=False
 
+    def Dive(self,P):
+        if P.pos!="ocean":
+            print("You must be near a body of water to dive.")
+
+        else:
+            if "Water Breathing" not in P.specials:
+                print("It is very deep, and you run out of air.")
+                print("You get lightheaded and lose 10 hp.")
+                P.hp-=10
+            else:
+                print("You can survive with your Water Breathing.")
+                print("You succesfully swim to the bottom of the ocean.")
+                if "Freindship Bracelet" != P.weapon and "Freindship Bracelet" not in P.items:
+                    print("You pick up a 'Freindship Bracelet' at the bottom of the ocean.")
+                    P.items+=["Freindship Bracelet"]
+
+        self.Done=False
+
+    def ending(self):
+        time.sleep(5)
+        print("The goblin king has a matching freindship bracelet!")
+        time.sleep(3)
+        print("Goblin King: That... That's my best freind's bracelet.")
+        time.sleep(3)
+        print("The Goblin King gives you a big hug.")
+        time.sleep(3)
+        print("Epilogue:")
+        time.sleep(3)
+        print("You and the Goblin King become BFFs.")
+        time.sleep(3)
+        print("But not all is good.")
+        time.sleep(3)
+        print("The conditions in the goblin village haven't gotten better.")
+        time.sleep(3)
+        print("And the Goblin King still calls the Gardener stinky.")
+        time.sleep(3)
+        print("You may have saved this one soul...")
+        time.sleep(3)
+        print("...but was it worth not helping the village?")
+        time.sleep(3)
+        exit()
+
 
 class Event:
     def __init__(self,name):
@@ -421,6 +480,7 @@ class Event:
                 print("Blacksmith: I guess I'll give you the Crown now.")
                 print("Blacksmith: As a bonus, I'll give you better gear.")
                 print("Blacksmith: Type 'bestow' then an item to make it your active item.")
+                B.locations+=["mountain"]
                 P.items+=["Medium Armor","Axe"]
                 self.body=[False,True]
 
