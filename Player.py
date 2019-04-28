@@ -26,6 +26,7 @@ class Player:
 
         print(Job("Warrior"))
         print(Job("Wizard"))
+        print(Job("Bard"))
 
         MyJob=input("Which class do you want to be? ")
 
