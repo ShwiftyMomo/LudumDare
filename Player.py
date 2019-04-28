@@ -66,6 +66,14 @@ class Player:
         print("Your damage increased by 5!")
         print("Your health increased by 10!\n")
 
+    def die(self):
+        print("Desire and")
+        print("All the sweet pulsing aches")
+        print("and gentle hurtings")
+        print("That were you,")
+        print("Are gone into the sullen dark.")
+        print("--Ernest Hemmingway")
+        exit()
 
     def __str__(self):
         I= "--"+self.name+"-- \n"

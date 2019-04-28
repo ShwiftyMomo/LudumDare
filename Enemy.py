@@ -29,6 +29,9 @@ class Enemy:
     def Attack(self,P):
         print(self.name + " dealt you "+str(int((self.dmg+Item(self.weapon).dmg)/Item(P.armor).arm))+" damage.")
         P.hp-=int((self.dmg+Item(self.weapon).dmg)/Item(P.armor).arm)
+        if P.hp<=0:
+            print(self.name +" has killed you!\n")
+           P.die()
 
     def __str__(self):
         I= "--"+self.name+"-- \n"

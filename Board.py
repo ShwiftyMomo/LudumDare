@@ -9,7 +9,7 @@ class Board:
         self.locations=["start","forest"]
         self.Done=True
 
-    def turn(self,P):
+    def turn(self,P,K):
         print("\n")
 
         self.Done=True

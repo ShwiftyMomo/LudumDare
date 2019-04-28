@@ -4,6 +4,7 @@ class King:
 	def __init__(self):
 		self.deals=["Strength"]
 		self.quests=["Clean Garden"]
+		self.freind=True
 
 	def talk(self,P,B):
 		print("Goblin King: Here are my quests \n")
