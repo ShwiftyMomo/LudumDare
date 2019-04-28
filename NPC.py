@@ -64,7 +64,7 @@ class NPC:
 						Op2=self.ask([O1,O2])
 
 						if Op2==1:
-							print("As if on que, a horde of mandrakes jump out of the dirt.")
+							print("As if on queue, a horde of mandrakes jump out of the dirt.")
 							B.enemies+=[Enemy("Mandrake Horde","Horde")]
 							self.stage=3
 
@@ -182,7 +182,7 @@ class NPC:
 
 					if Op1==1:
 						print("Blacksmith: Oh, that's what your here for.")
-						print("Blacksmith: When making it for him a dropped it in a pit of spiders.")
+						print("Blacksmith: When making it for him I dropped it in a pit of spiders.")
 						print("Blacksmith: So you'll have to deal with that.")
 
 						O1= "Oh HELL no. I'm an arachnophobe."

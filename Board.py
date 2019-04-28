@@ -479,6 +479,7 @@ class Event:
                 print("Gardener: As a reward, you can have my healing Potions!")
                 P.consumables+=["Healing Potion","Healing Potion"]
                 P.items+=["Healing Potion","Healing Potion"]
+                print("You have completed the 'Clean Garden' quest!")
                 self.body=[False,True]
 
         if self.name=="Get Crown":
@@ -486,8 +487,9 @@ class Event:
             if B.enemies==[] and B.Blacksmith.stage==3:
                 print("Blacksmith: I guess I'll give you the Crown now.")
                 print("Blacksmith: As a bonus, I'll give you better gear.")
-                print("Blacksmith: Type '(b)estow' then an item to make it your active item.")
+                print("Blacksmith: Type '(b)estow' then an item to make it your active item.\n")
                 B.locations+=["mountain"]
                 P.items+=["Medium Armor","Axe"]
+                print("You have completed the 'Get Crown' quest!")
                 self.body=[False,True]
 
