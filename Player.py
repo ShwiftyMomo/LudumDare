@@ -58,7 +58,7 @@ class Player:
 
         print("Every turn you will type the action you want to preform.")
         print("Type 'start game' when you are ready to begin.")
-        print("Type 'help' to see all possible moves. \n")
+        print("Type '(h)elp' to see all possible moves. \n")
 
     def Up(self):
         self.xp-=2**(2+self.lv)

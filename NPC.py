@@ -69,7 +69,7 @@ class NPC:
 							self.stage=3
 
 					if Op1==2:
-						print("Gardener: I think he's overcompensating for a lack of close freinships.")
+						print("Gardener: I think he's overcompensating for a lack of close friendships.")
 						print("Gardener: Perhaps you could become his freind and heal the hole in his heart.")
 						O1="How could I befreind him?"
 						O2="Have you tried befreinding him yourself?"
@@ -234,7 +234,7 @@ class NPC:
 							print("Blacksmith: I will awnser with a question.")
 							print("Blacksmith: Do you have free will now?")
 							O1="Yes"
-							Op3=seld.ask([O1])
+							Op3=self.ask([O1])
 
 	def Attack(self,P):
 		print(self.name + " dealt you "+str(int(self.dmg/Item(P.armor).arm))+" damage.")

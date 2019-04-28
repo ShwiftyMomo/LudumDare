@@ -273,13 +273,20 @@ class Board:
                         print("The goblins are doing hard manual labor")
 
                     if Str == "forge":
-                        self.person=[self.Blacksmith]
                         print("The forge is hot and fiery.")
+                        if self.Blacksmith.hp>0:
+                            self.person=[self.Blacksmith]
+                            print("There is a Blacksmith hard at work")
+                        else:
+                            self.person=[]
 
                     if Str == "garden":
-                        self.person=[self.Gardener]
                         print("The garden is nice are welcoming.")
-
+                        if self.Gardener.hp>0:
+                            self.person=[self.Gardener]
+                            print("There is a Gardener tending to their plants.")
+                        else:
+                            self.person=[]
                     if Str=="forest":
                         self.person=[self.King]
                         print("The forest is dark and gloomy.")
@@ -409,7 +416,7 @@ class Event:
                 self.body[0]=True
 
                 print("You see two marauding goblins approaching! \n")
-                print("Type 'attack' to fight them, before they get you!")
+                print("Type '(a)ttack' to fight them, before they get you!")
 
                 B.enemies=[Enemy("Goblin1","Goblin"),Enemy("Goblin2","Goblin")]
 
@@ -423,7 +430,7 @@ class Event:
                 print("A large figure approaches you.")
                 print("Goblin King: I am the king of these lands.")
                 print("Goblin King: If you wish to stay alive, you must complete my quests.")
-                print("Type 'talk' to talk whoever is in your location. \n")
+                print("Type '(t)alk' to talk whoever is in your location. \n")
 
         if self.name=="Goblin King":
 
@@ -461,7 +468,7 @@ class Event:
 
                 print("Congratulations, you fended off the Goblins!")
                 print("They came from the forest up above, so you might want to go check that out.")
-                print("Type 'walk forest' to go to the forest. \n")
+                print("Type '(w)alk forest' to go to the forest. \n")
                 B.locations+=["forest"]
                 self.body=[False,True]
 
@@ -479,7 +486,7 @@ class Event:
             if B.enemies==[] and B.Blacksmith.stage==3:
                 print("Blacksmith: I guess I'll give you the Crown now.")
                 print("Blacksmith: As a bonus, I'll give you better gear.")
-                print("Blacksmith: Type 'bestow' then an item to make it your active item.")
+                print("Blacksmith: Type '(b)estow' then an item to make it your active item.")
                 B.locations+=["mountain"]
                 P.items+=["Medium Armor","Axe"]
                 self.body=[False,True]
