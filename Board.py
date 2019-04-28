@@ -6,8 +6,8 @@ from NPC import NPC
 class Board:
     def __init__(self):
         self.enemies=[]
-        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown")]
-        self.locations=["start"]
+        self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown"),Event("Mountain"),Event("Ocean")]
+        self.locations=["start","mountain","ocean","desert"]
         self.person=[]
         self.Done=True
         self.King=King()
@@ -57,6 +57,9 @@ class Board:
             if move == "map" or move == "m":
                 self.Map(P)
 
+            if move == "spelunk" or move == "s":
+                self.Spelunk(P)
+
             for event in self.events:
                 if event.body==[False,False]:
                     event.test(move,self,P)
@@ -78,8 +81,12 @@ class Board:
         I+="(u)se + consumable: consume the consumable \n"
         if self.events[0].body!=[False,False]:
             I+="(w)alk + location: change location \n"
-            I+="(m)ap: show all locations"
+            I+="(m)ap: show all locations \n"
             I+="(t)alk: talk to whoever is in your location \n"
+
+        if self.events[4].body=[False,True]:
+            I+="(s)pelunk: explore cave \n"
+
         print(I)
         self.Done=False
 
@@ -232,6 +239,17 @@ class Board:
                     P.pos=Str
                     print("You moved to the "+Str+".")
 
+                    if Str == "mountain":
+                        self.person=[]
+                        print("The mountain is tall and cold.")
+                        if self.events[4].body==[False,False]:
+                            self.events[4].body=[False,True]
+                    if Str == "desert":
+                        self.person=[]
+                        print("The desert is hot and sweaty.")
+                        print("There is a village of empoversihed goblins.")
+                        print("The goblins are doing hard manual labor")
+
                     if Str == "forge":
                         self.person=[self.Blacksmith]
                         print("The forge is hot and fiery.")
@@ -266,6 +284,24 @@ class Board:
         I="Locations: \n"
         for l in self.locations:
             I+="\t"+l+"\n"
+
+        print(I)
+
+    def Spelunk(self,P):
+        if P.pos!="mountain":
+            print("You must be near a cave to spelunk.")
+
+        else:
+            if "Dark Vision" not in P.specials:
+                print("It is very dark, and you are hit by bats.")
+                print("You get dealt 10 damage by the bats.")
+                P.hp-=10
+            else:
+                print("You can see the bats with your Dark Vision.")
+                print("You succesfully avoid the bats.")
+                if "KILLER SWORD" != P.weapon and "KILLER SWORD" not in P.items:
+                    print("You pick up a 'KILLER SWORD' at the back of the cave.")
+                    P.items+=["KILLER SWORD"]
 
         print(I)
 

@@ -3,12 +3,12 @@ from Item import Item
 class King:
 	def __init__(self):
 		self.name = "Goblin King"
-		self.deals=["Strength","Water Breathing"]
+		self.deals=["Strength","Water Breathing","Dark Vision"]
 		self.quests=["Clean Garden","Get Crown"]
 		self.freind=True
-		self.hp=300
-		self.dmg=50
-		self.xp=100
+		self.hp=10000
+		self.dmg=100
+		self.xp=1000
 
 	def talk(self,P,B):
 		if B.events[2].body==[False,True] or B.events[3].body==[False,True]:
@@ -64,7 +64,11 @@ class Pact:
 
 		if name == "Water Breathing":
 			self.cost=25
-			self.blurb="Be able to breathe undervater"
+			self.blurb="Be able to breathe underwater"
+
+		if name == "Dark Vision":
+			self.cost=25
+			self.blurb="Be able to see in the dark"
 	
 	def run(self,P):
 		P.hpMax-=self.cost
@@ -77,6 +81,9 @@ class Pact:
 
 		if self.name == "Water Breathing":
 			P.specials+=["Water Breathing"]
+
+		if self.name == "Water Breathing":
+			P.specials+=["Dark Vision"]
 
 	def __str__(self):
 		I= "--"+self.name+"-- \n"

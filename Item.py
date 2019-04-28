@@ -12,7 +12,12 @@ class Item:
             self.blurb="The original, a sword."
             self.mode="weapon"
 
-        if mode=="Sword":
+        if mode=="KILLER SWORD":
+            self.dmg=1000000
+            self.blurb="This masterwork sword can kill anything."
+            self.mode="weapon"
+
+        if mode=="Axe":
             self.dmg=20
             self.blurb="A two-sided head chopper."
             self.mode="weapon"
