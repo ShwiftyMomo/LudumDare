@@ -11,7 +11,7 @@ class King:
 		self.xp=100
 
 	def talk(self,P,B):
-		if self.Events[2]==[False,True]:
+		if B.events[2].body==[False,True] or B.events[3].body==[False,True]:
 			print("Goblin King: Back for another quest I see")
 
 		print("Goblin King: Here are my quests \n")
@@ -43,9 +43,8 @@ class King:
 				B.events[3].body[0]=True
 				B.locations+=["forge"]
 
-
-		self.quests.remove(move)
-		print("You have decided to embark on the '"+move+"' quest!\n")
+			self.quests.remove(move)
+			print("You have decided to embark on the '"+move+"' quest!\n")
 		B.events[1].body=[False,True]
 
 	def Attack(self,P):

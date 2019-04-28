@@ -47,7 +47,7 @@ class NPC:
 						print("Gardener: Oh, a new face!")
 						print("Gardener: It was getting boring with just my dirty plants.")
 
-					if self.stage ==2:
+					if self.stage ==2 or self.stage ==3:
 						print("Gardener: What do you want to talk about?")
 
 					O1="Why are your plants dirty?"
@@ -163,16 +163,14 @@ class NPC:
 								O3="Dude, that's deep."
 								Op3=self.ask([O1,O2,O3])
 
-
 		if self.name=="Blacksmith":
 			if self.stage ==1 or self.stage ==2:
-
 					if self.stage ==1:
 						self.stage=2
 						print("Blacksmith: Haven't seen you around here.")
 						print("Blacksmith: What you here for?")
 
-					if self.stage ==2:
+					if self.stage ==2 or self.stage ==3:
 						print("Blacksmith: You got something to say?")
 
 					O1="Could I get a crown for the Goblin King?"
@@ -193,6 +191,7 @@ class NPC:
 						if Op2==2 or Op2==3:
 							print("Blacksmith: Well it's your lucky day then.")
 							B.enemies+=[Enemy("Spider Den","Horde")]
+							self.stage=3
 
 					if Op1==2:
 						print("Blacksmith: I once forged a blade that could kill any goblin it touched...")
@@ -207,7 +206,7 @@ class NPC:
 						if Op2==2:
 							print("Blaksmith: Deep in a cave, but I'm not sure exactly where.")
 
-					if Op1=3:
+					if Op1==3:
 						print("Blacksmith: Generally people rebut free will with determinism.")
 						print("Blacksmith: But the argument is flawed.")
 						print("Blacksmith: Determinism meerly means that you would re-do the same decisions.")
@@ -233,7 +232,6 @@ class NPC:
 							print("Blacksmith: Do you have free will now?")
 							O1="Yes"
 							Op3=seld.ask([O1])
-						
 
 	def Attack(self,P):
 		print(self.name + " dealt you "+str(int(self.dmg/Item(P.armor).arm))+" damage.")

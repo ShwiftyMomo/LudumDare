@@ -12,14 +12,24 @@ class Item:
             self.blurb="The original, a sword."
             self.mode="weapon"
 
+        if mode=="Sword":
+            self.dmg=20
+            self.blurb="A two-sided head chopper."
+            self.mode="weapon"
+
         if mode=="Mass":
             self.dmg=10
             self.blurb="An overwhelming force."
             self.mode="weapon"
 
         if mode=="Light Armor":
-            self.arm=1.5
+            self.arm=1.3
             self.blurb="A wee bit of protection is better than none at all."
+            self.mode="armor"
+
+        if mode=="Medium Armor":
+            self.arm=1.5
+            self.blurb="Hefty protection."
             self.mode="armor"
 
         if mode=="Healing Potion":
