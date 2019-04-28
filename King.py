@@ -82,7 +82,7 @@ class Pact:
 		if self.name == "Water Breathing":
 			P.specials+=["Water Breathing"]
 
-		if self.name == "Water Breathing":
+		if self.name == "Dark Vision":
 			P.specials+=["Dark Vision"]
 
 	def __str__(self):

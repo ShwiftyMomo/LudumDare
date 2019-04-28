@@ -379,7 +379,7 @@ class Event:
                 time.sleep(3)
                 print("You have killed the king, but for what.")
                 time.sleep(3)
-                print("All he ever wanted was a freind")
+                print("All he ever wanted was a freind.")
                 time.sleep(3)
                 print("He had started to think that maybe you were a freind.")
                 time.sleep(3)
@@ -390,8 +390,9 @@ class Event:
                 print("He just wanted to build a freindship.")
                 time.sleep(3)
                 print("And you killed him.")
-                time.sleep(10)
+                time.sleep(3)
                 print("I hope you're happy with you 'decision'.")
+                time.sleep(3)
                 exit()
     def run(self,move,B,P):
 
