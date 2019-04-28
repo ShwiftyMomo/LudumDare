@@ -248,22 +248,10 @@ class Board:
             print("The walls do not seem to respond to your inquiry.")
 
         if len(self.person)==1:
-            self.person[0].talk(P,self)
-
-        if len(self.person)>1:
-            I="Who do you want to talk to:\n"
-            for p in self.person:
-                I+="\t"+p.name+"\n"
-            print(I)
-
-            Enem=input()
-
-            while Enem not in [p.name for p in self.person]:
-                print("That isin't one of the choices. \n")
-                Enem=input()
-
-            self.person[[p.name for p in self.person].index(Enem)].talk(P,B)
-
+            if self.person[0].freind:
+                self.person[0].talk(P,self)
+            else:
+                print("You can't talk with enemies!")
 
         self.Done=False
 
@@ -298,12 +286,10 @@ class Event:
             if P.pos=="forest":
                 self.body[0]=True
 
-                print("The forest is dark and gloomy.")
                 print("A large figure approaches you.")
                 print("Goblin King: I am the king of these lands.")
                 print("Goblin King: If you wish to stay alive, you must complete my quests.")
                 print("Type 'talk' to talk whoever is in your location. \n")
-
 
     def run(self,move,B,P):
 
@@ -316,3 +302,13 @@ class Event:
                 print("Type 'walk forest' to go to the forest. \n")
                 B.locations+=["forest"]
                 self.body=[False,True]
+
+        if self.name=="Clean Garden":
+
+            if B.enemies==[] and self.Gardener.stage==3:
+                print("Gardener: Thank you for Cleaning my plants!")
+                print("Gardener: As a reward, you can have my healing Potions!")
+                P.consumables+=["Healing Potion","Healing Potion"]
+                P.items+=["Healing Potion","Healing Potion"]
+                self.body=[False,True]
+
