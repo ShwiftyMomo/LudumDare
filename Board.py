@@ -132,7 +132,7 @@ class Board:
             if Enem in [people.name for people in self.person]:
                 Enem=self.person[[people.name for people in self.person].index(Enem)]
 
-                if Enem==self.King and P.weapon="Freindship Bracelet":
+                if Enem==self.King and P.weapon.name=="Freindship Bracelet":
                     self.ending()
 
                 if Enem.freind:
