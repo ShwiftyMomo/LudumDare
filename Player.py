@@ -1,5 +1,6 @@
 from Job import Job
 from Item import Item
+import time
 
 class Player:
     def __init__(self):
@@ -20,7 +21,7 @@ class Player:
         self.dmg=None
 
     def intro(self):
-        print("Welcome to the game!")
+        print("Welcome to Scroll!")
         print("Here are the possible classes: \n")
 
         print(Job("Warrior"))
@@ -67,12 +68,21 @@ class Player:
         print("Your health increased by 10!\n")
 
     def die(self):
+        time.sleep(1)
         print("Desire and")
+        time.sleep(1)
         print("All the sweet pulsing aches")
+        time.sleep(1)
         print("and gentle hurtings")
+        time.sleep(1)
         print("That were you,")
+        time.sleep(1)
         print("Are gone into the sullen dark.")
+        time.sleep(1)
         print("--Ernest Hemmingway")
+        time.sleep(1)
+        print("\n")
+        time.sleep(1)
         exit()
 
     def __str__(self):

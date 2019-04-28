@@ -1,10 +1,14 @@
 from Player import Player
-
+from Item import Item
 class King:
 	def __init__(self):
+		self.name = "Goblin King"
 		self.deals=["Strength"]
 		self.quests=["Clean Garden"]
 		self.freind=True
+		self.hp=300
+		self.dmg=50
+		self.xp=100
 
 	def talk(self,P,B):
 		print("Goblin King: Here are my quests \n")
@@ -30,6 +34,16 @@ class King:
 				self.quests.remove(move)
 
 			print("You have decided to embark on the '"+move+"' quest!\n")
+			B.locations+=["garden"]
+
+		B.events[1].body=[False,True]
+
+	def Attack(self,P):
+		print(self.name + " dealt you "+str(int(self.dmg/Item(P.armor).arm))+" damage.")
+		P.hp-=int(self.dmg/Item(P.armor).arm)
+		if P.hp<=0:
+			print(self.name +" has killed you!\n")
+			P.die()
 
 class Pact:
 	def __init__(self,name):

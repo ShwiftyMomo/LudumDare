@@ -10,19 +10,11 @@ class Enemy:
             self.weapon="Knife"
             self.xp=5
 
-        if part == "Orc":
-            self.dmg=0
-            self.hpMax=125
-            self.hp=125
-            self.weapon="Knife"
-            self.xp=10
-
-
-        if part == "Mercenary":
-            self.dmg=0
+        if part == "Horde":
+            self.dmg=30
             self.hpMax=100
             self.hp=100
-            self.weapon="Sword"
+            self.weapon="Mass"
             self.xp=15
 
 
@@ -31,7 +23,7 @@ class Enemy:
         P.hp-=int((self.dmg+Item(self.weapon).dmg)/Item(P.armor).arm)
         if P.hp<=0:
             print(self.name +" has killed you!\n")
-           P.die()
+            P.die()
 
     def __str__(self):
         I= "--"+self.name+"-- \n"

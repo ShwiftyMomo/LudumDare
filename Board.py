@@ -1,15 +1,18 @@
 from Enemy import Enemy
 from Item import Item
 from King import King
-
+from NPC import NPC
 class Board:
     def __init__(self):
         self.enemies=[]
         self.events=[Event("Start"),Event("Forest"),Event("Clean Garden")]
-        self.locations=["start","forest"]
+        self.locations=["start"]
+        self.person=[]
         self.Done=True
+        self.King=King()
+        self.Gardener=NPC("Gardener")
 
-    def turn(self,P,K):
+    def turn(self,P):
         print("\n")
 
         self.Done=True
@@ -27,6 +30,9 @@ class Board:
                 self.Attack(P)
                 for enemy in self.enemies:
                     enemy.Attack(P)
+                for people in self.person:
+                    if not people.freind:
+                        people.Attack(P)
 
             if move == "info" or move == "i":
                 self.Info(P)
@@ -46,8 +52,10 @@ class Board:
             if move == "talk" or move == "t":
                 self.Talk(P)
 
-            for event in self.events:
+            if move == "map" or move == "m":
+                self.Map(P)
 
+            for event in self.events:
                 if event.body==[False,False]:
                     event.test(move,self,P)
 
@@ -68,7 +76,7 @@ class Board:
         I+="(u)se + consumable: consume the consumable \n"
         if self.events[0].body!=[False,False]:
             I+="(w)alk + location: change location \n"
-        if self.events[1].body!=[False,False]:
+            I+="(m)ap: show all locations"
             I+="(t)alk: talk to whoever is in your location \n"
         print(I)
         self.Done=False
@@ -78,7 +86,7 @@ class Board:
         self.Done=False
 
     def Attack(self,P):
-        if self.enemies == []:
+        if self.enemies == [] and self.person == []:
             print("There are no enemies to attack." + "\n")
 
         else:
@@ -87,15 +95,25 @@ class Board:
             for enemy in self.enemies:
                 I+="\t" + enemy.name +"\n"
 
+            for people in self.person:
+                I+="\t" + people.name +"\n"
+
             I+="\n"
 
             Enem = input(I)
 
-            while Enem not in [enemy.name for enemy in self.enemies]:
+            while Enem not in [enemy.name for enemy in self.enemies] and Enem not in [people.name for people in self.person]:
                 print("That isin't one of the choices. \n")
                 Enem = input(I)
 
-            Enem = self.enemies[[enemy.name for enemy in self.enemies].index(Enem)]
+            if Enem in [enemy.name for enemy in self.enemies]:
+                Enem = self.enemies[[enemy.name for enemy in self.enemies].index(Enem)]
+
+            if Enem in [people.name for people in self.person]:
+                Enem=self.person[[people.name for people in self.person].index(Enem)]
+                if Enem.freind:
+                    print("You got "+Enem.name+" angry!")
+                Enem.freind=False
 
             Enem.hp-=Item(P.weapon).dmg+P.dmg
 
@@ -108,11 +126,19 @@ class Board:
                 P.xp+=Enem.xp
                 if P.xp>=2**(2+P.lv):
                     P.Up()
-                self.enemies.remove(Enem)
+
+                if Enem in self.enemies:
+                    self.enemies.remove(Enem)
+                    if len(self.enemies)==0:
+                        print("There are no more enemies left.")
+
+                else:
+                    self.person.remove(Enem)
+                    if len(self.person)==0:
+                        print("There are no NPCs left.")
 
 
-            if len(self.enemies)==0:
-                print("There are no more enemies left.")
+
 
             print("\n")
 
@@ -203,11 +229,50 @@ class Board:
                 else:
                     P.pos=Str
                     print("You moved to the "+Str+".")
+
+                    if Str == "garden":
+                        self.person=[self.Gardener]
+                        print("The garden is nice are welcoming.")
+
+                    if Str=="forest":
+                        self.person=[self.King]
+                        print("The forest is dark and gloomy.")
+
+                    if Str=="start":
+                        self.person=[]
+
                     self.Done=False
 
     def Talk(self,P):
-        King().talk(P,self)
+        if len(self.person)==0:
+            print("The walls do not seem to respond to your inquiry.")
+
+        if len(self.person)==1:
+            self.person[0].talk(P,self)
+
+        if len(self.person)>1:
+            I="Who do you want to talk to:\n"
+            for p in self.person:
+                I+="\t"+p.name+"\n"
+            print(I)
+
+            Enem=input()
+
+            while Enem not in [p.name for p in self.person]:
+                print("That isin't one of the choices. \n")
+                Enem=input()
+
+            self.person[[p.name for p in self.person].index(Enem)].talk(P,B)
+
+
         self.Done=False
+
+    def Map(self,P):
+        I="Locations: \n"
+        for l in self.locations:
+            I+="\t"+l+"\n"
+
+        print(I)
 
 class Event:
     def __init__(self,name):
@@ -249,5 +314,5 @@ class Event:
                 print("Congratulations, you fended off the Goblins!")
                 print("They came from the forest up above, so you might want to go check that out.")
                 print("Type 'walk forest' to go to the forest. \n")
-
+                B.locations+=["forest"]
                 self.body=[False,True]
