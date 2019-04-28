@@ -12,6 +12,16 @@ class Item:
             self.blurb="The original, a sword."
             self.mode="weapon"
 
+        if mode=="Lute":
+            self.dmg=15
+            self.blurb="A musical instrument."
+            self.mode="weapon"
+
+        if mode=="Freindship Bracelet":
+            self.dmg=20
+            self.blurb="It says Goblin + Bobby forever."
+            self.mode="weapon"
+
         if mode=="KILLER SWORD":
             self.dmg=1000000
             self.blurb="This masterwork sword can kill anything."

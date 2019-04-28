@@ -132,7 +132,7 @@ class Board:
             if Enem in [people.name for people in self.person]:
                 Enem=self.person[[people.name for people in self.person].index(Enem)]
 
-                if Enem==self.King and P.weapon.name=="Freindship Bracelet":
+                if Enem==self.King and P.weapon=="Freindship Bracelet":
                     self.ending()
 
                 if Enem.freind:
@@ -326,6 +326,8 @@ class Board:
                 print("It is very dark, and you are hit by bats.")
                 print("You get dealt 10 damage by the bats.")
                 P.hp-=10
+                if P.hp<=0:
+                    P.die()
             else:
                 print("You can see the bats with your Dark Vision.")
                 print("You succesfully avoid the bats.")
@@ -369,6 +371,39 @@ class Board:
                 print("It is very deep, and you run out of air.")
                 print("You get lightheaded and lose 10 hp.")
                 P.hp-=10
+                if P.hp<=0:
+                    if P.job!="Bard":
+                        P.die()
+                    else:
+                        time.sleep(1)
+                        print("Desire and")
+                        time.sleep(1)
+                        print("All the sweet pulsing aches")
+                        time.sleep(1)
+                        print("and gentle hurtings")
+                        time.sleep(1)
+                        print("That were you,")
+                        time.sleep(1)
+                        print("Are gone into the sullen dark.")
+                        time.sleep(1)
+                        print("--Ernest Hemmingway")
+                        time.sleep(1)
+                        print("\n")
+                        time.sleep(5)
+                        print("WAIT!")
+                        time.sleep(1)
+                        print("A group of Mer-People save you.")
+                        print("It turns out Atlantis has a Bard shortage.")
+                        time.sleep(1)
+                        print("Epilogue:")
+                        time.sleep(3)
+                        print("You live with the Mer-people for the rest of eternity.")
+                        time.sleep(3)
+                        print("Are you dead or is this happening?")
+                        time.sleep(3)
+                        print("And is there a difference?")
+                        time.sleep(3)
+                        exit()
             else:
                 print("You can survive with your Water Breathing.")
                 print("You succesfully swim to the bottom of the ocean.")
@@ -379,7 +414,7 @@ class Board:
         self.Done=False
 
     def ending(self):
-        time.sleep(5)
+        print("\n")
         print("The goblin king has a matching freindship bracelet!")
         time.sleep(3)
         print("Goblin King: That... That's my best freind's bracelet.")

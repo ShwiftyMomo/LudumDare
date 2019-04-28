@@ -14,6 +14,11 @@ class Job:
             self.hp=75
             self.items=["Magic Wand","Healing Potion","Robes"]
 
+        if part=="Bart":
+            self.dmg=10
+            self.hp=50
+            self.items=["Lute","Healing Potion","Robes"]
+
 
 
     def __str__(self):
