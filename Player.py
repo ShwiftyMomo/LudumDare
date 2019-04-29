@@ -24,11 +24,11 @@ class Player:
         print("Welcome to Scroll!")
         print("Here are the possible classes: \n")
 
-        print(Job("Warrior"))
-        print(Job("Wizard"))
-        print(Job("Bard"))
+        print(Job("warrior"))
+        print(Job("wizard"))
+        print(Job("bard"))
 
-        MyJob=input("Which class do you want to be? ")
+        MyJob=input("Which class do you want to be? ").lower()
 
         while Job(MyJob).dmg==None:
             print("Sorry, that isn't a possible class. \n")
@@ -64,6 +64,9 @@ class Player:
     def Up(self):
         self.xp-=2**(2+self.lv)
         self.lv+=1
+        self.dmg+=5
+        self.hpMax+=10
+        self.hp+=10
         print("You are now level "+str(self.lv)+"!")
         print("Your damage increased by 5!")
         print("Your health increased by 10!\n")

@@ -17,7 +17,7 @@ class Item:
             self.blurb="A musical instrument."
             self.mode="weapon"
 
-        if mode=="Freindship Bracelet":
+        if mode=="Friendship Bracelet":
             self.dmg=20
             self.blurb="It says Goblin + Bobby forever."
             self.mode="weapon"

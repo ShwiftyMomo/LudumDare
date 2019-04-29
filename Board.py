@@ -8,12 +8,13 @@ class Board:
         self.enemies=[]
         self.events=[Event("Start"),Event("Forest"),Event("Clean Garden"),Event("Get Crown")]
         self.events+=[Event("Mountain"),Event("Ocean"),Event("Goblin King")]
-        self.locations=["start","ocean","desert"]
+        self.locations=["start","desert"]
         self.person=[]
         self.Done=True
         self.King=King()
         self.Gardener=NPC("Gardener")
         self.Blacksmith=NPC("Blacksmith")
+        self.Worker=NPC("Worker")
 
     def turn(self,P):
         print("\n")
@@ -43,20 +44,17 @@ class Board:
             if move.split(" ")[0] == "examine" or move.split(" ")[0] == "x":
                 self.Examine(P,move)
 
-            if move == "exit" or move == "e":
-                self.Exit(P)
+            if move == "quit" or move == "q":
+                self.Quit(P)
 
             if move.split(" ")[0] == "use" or move.split(" ")[0] == "u":
                 self.Use(P,move)
 
-            if move.split(" ")[0] == "walk" or move.split(" ")[0] == "w":
-                self.Walk(P,move)
+            if move == "walk" or move == "w":
+                self.Walk(P)
 
             if move == "talk" or move == "t":
                 self.Talk(P)
-
-            if move == "map" or move == "m":
-                self.Map(P)
 
             if move == "spelunk" or move == "s":
                 self.Spelunk(P)
@@ -64,8 +62,8 @@ class Board:
             if move == "dive" or move == "d":
                 self.Dive(P)
 
-            if move.split(" ")[0] == "bestow" or move.split(" ")[0] == "b":
-                self.Bestow(P,move)
+            if move.split(" ")[0] == "equip" or move.split(" ")[0] == "e":
+                self.Equip(P,move)
 
             for event in self.events:
                 if event.body==[False,False]:
@@ -84,12 +82,11 @@ class Board:
         I+="e(x)amine + item: examine an item you possess \n"
         I+="e(x)amine + enemy: examine an enemy you are fighting \n"
         I+="(a)ttack: attack enemies \n"
-        I+="(e)xit: leave the game \n"
+        I+="(q)uit: leave the game \n"
         I+="(u)se + consumable: consume the consumable \n"
-        I+="(b)estow + item: set item to your active item \n"
+        I+="(e)quip + item: set item to your active item \n"
         if self.events[0].body!=[False,False]:
-            I+="(w)alk + location: change location \n"
-            I+="(m)ap: show all locations \n"
+            I+="(w)alk: change location \n"
             I+="(t)alk: talk to whoever is in your location \n"
 
         if self.events[4].body==[False,True]:
@@ -121,19 +118,34 @@ class Board:
             I+="\n"
 
             Enem = input(I)
+            Temp=[]
+            for word in Enem.split(" "):
+                Temp+=[word[0].upper()+word[1:]]
+
+            Enem=""
+            for word in Temp:
+                Enem+=word+" "
+
+            Enem=Enem[:-1]
 
             while Enem not in [enemy.name for enemy in self.enemies] and Enem not in [people.name for people in self.person]:
                 print("That isin't one of the choices. \n")
-                Enem = input(I)
+                Enem = input()
+                Temp=[]
+                for word in Enem.split(" "):
+                    Temp+=[word[0].upper()+word[1:]]
+
+                Enem=""
+                for word in Temp:
+                    Enem+=word+" "
+                    
+                Enem=Enem[:-1]
 
             if Enem in [enemy.name for enemy in self.enemies]:
                 Enem = self.enemies[[enemy.name for enemy in self.enemies].index(Enem)]
 
             if Enem in [people.name for people in self.person]:
                 Enem=self.person[[people.name for people in self.person].index(Enem)]
-
-                if Enem==self.King and P.weapon=="Freindship Bracelet":
-                    self.ending()
 
                 if Enem.freind:
                     print("You got "+Enem.name+" angry!")
@@ -177,7 +189,7 @@ class Board:
             Str=""
 
             for i in move.split(" ")[1:]:
-                Str+=i+" "
+                Str+=i[0].upper()+i[1:]+" "
 
             Str=Str[:-1]
 
@@ -189,7 +201,7 @@ class Board:
                 print(str(self.enemies[[enemy.name for enemy in self.enemies].index(Str)])+"\n")
                 self.Done=False
 
-    def Exit(self,P):
+    def Quit(self,P):
         print("Thanks for having played my game!")
         self.Done=False
         exit()
@@ -199,7 +211,7 @@ class Board:
             Str=""
 
             for i in move.split(" ")[1:]:
-                Str+=i+" "
+                Str+=i[0].upper()+i[1:]+" "
 
             Str=Str[:-1]
 
@@ -238,64 +250,66 @@ class Board:
 
                 self.Done=False
 
-    def Walk(self,P,move):
-        if len(move.split(" ")) !=1:
-            Str=""
+    def Walk(self,P):
+        I="Locations: \n"
+        for l in self.locations:
+            I+="\t"+l+"\n"
 
-            for i in move.split(" ")[1:]:
-                Str+=i+" "
+        print(I)
 
-            Str=Str[:-1]
+        if self.enemies !=[]:
+            print("You can't run away from a fight!")
 
-            if Str in self.locations:
-                if self.enemies !=[]:
-                    print("You can't run away from a fight!")
+        else:
+            Enem=input().lower()
 
+            while Enem not in self.locations:
+                print("That isn't a possible location.")
+                Enem=input().lower()
+
+            P.pos=Enem
+            print("You moved to the "+Enem+".")
+
+            if Enem == "ocean":
+                self.person=[]
+                print("The ocean is large and blue.")
+                if self.events[5].body==[False,False]:
+                    self.events[5].body=[False,True]
+
+            if Enem == "mountain":
+                self.person=[]
+                print("The mountain is tall and cold.")
+                if self.events[4].body==[False,False]:
+                    self.events[4].body=[False,True]
+            if Enem == "desert":
+                self.person=[self.Worker]
+                print("The desert is hot and sweaty.")
+                print("There is a Worker goblin hard at work")
+
+            if Enem == "forge":
+                print("The forge is hot and fiery.")
+                if self.Blacksmith.hp>0:
+                    self.person=[self.Blacksmith]
+                    print("There is a Blacksmith hard at work")
                 else:
-                    P.pos=Str
-                    print("You moved to the "+Str+".")
+                    self.person=[]
 
-                    if Str == "ocean":
-                        self.person=[]
-                        print("The ocean is large and blue.")
-                        if self.events[5].body==[False,False]:
-                            self.events[5].body=[False,True]
+            if Enem == "garden":
+                print("The garden is nice are welcoming.")
+                if self.Gardener.hp>0:
+                    self.person=[self.Gardener]
+                    print("There is a Gardener tending to their plants.")
+                else:
+                    self.person=[]
+            if Enem=="forest":
+                self.person=[self.King]
+                print("The forest is dark and gloomy.")
 
-                    if Str == "mountain":
-                        self.person=[]
-                        print("The mountain is tall and cold.")
-                        if self.events[4].body==[False,False]:
-                            self.events[4].body=[False,True]
-                    if Str == "desert":
-                        self.person=[]
-                        print("The desert is hot and sweaty.")
-                        print("There is a village of empoversihed goblins.")
-                        print("The goblins are doing hard manual labor")
+            if Enem=="start":
+                self.person=[]
+                print("You see an easter egg on the ground.")
 
-                    if Str == "forge":
-                        print("The forge is hot and fiery.")
-                        if self.Blacksmith.hp>0:
-                            self.person=[self.Blacksmith]
-                            print("There is a Blacksmith hard at work")
-                        else:
-                            self.person=[]
-
-                    if Str == "garden":
-                        print("The garden is nice are welcoming.")
-                        if self.Gardener.hp>0:
-                            self.person=[self.Gardener]
-                            print("There is a Gardener tending to their plants.")
-                        else:
-                            self.person=[]
-                    if Str=="forest":
-                        self.person=[self.King]
-                        print("The forest is dark and gloomy.")
-
-                    if Str=="start":
-                        self.person=[]
-                        print("You see an easter egg on the ground.")
-
-                    self.Done=False
+            self.Done=False
 
     def Talk(self,P):
         if len(self.person)==0:
@@ -307,14 +321,6 @@ class Board:
             else:
                 print("You can't talk with enemies!")
 
-        self.Done=False
-
-    def Map(self,P):
-        I="Locations: \n"
-        for l in self.locations:
-            I+="\t"+l+"\n"
-
-        print(I)
         self.Done=False
 
     def Spelunk(self,P):
@@ -337,12 +343,12 @@ class Board:
 
         self.Done=False
 
-    def Bestow(self,P,move):
+    def Equip(self,P,move):
         if len(move.split(" ")) !=1:
             Str=""
 
             for i in move.split(" ")[1:]:
-                Str+=i+" "
+                Str+=i[0].upper()+i[1:]+" "
 
             Str=Str[:-1]
 
@@ -351,11 +357,13 @@ class Board:
                     P.items+=[P.weapon]
                     P.items.remove(Str)
                     P.weapon=Str
+                    print("You equiped '"+Str+"'!")
 
                 if Item(Str).mode=="armor":
                     P.items+=[P.armor]
                     P.items.remove(Str)
                     P.armor=Str
+                    print("You equiped '"+Str+"'!")
 
                 if Item(Str).mode=="consumable":
                     print("You cannot equip consumables")
@@ -407,9 +415,9 @@ class Board:
             else:
                 print("You can survive with your Water Breathing.")
                 print("You succesfully swim to the bottom of the ocean.")
-                if "Freindship Bracelet" != P.weapon and "Freindship Bracelet" not in P.items:
-                    print("You pick up a 'Freindship Bracelet' at the bottom of the ocean.")
-                    P.items+=["Freindship Bracelet"]
+                if "Friendship Bracelet" != P.weapon and "Friendship Bracelet" not in P.items:
+                    print("You pick up a 'Friendship Bracelet' at the bottom of the ocean.")
+                    P.items+=["Friendship Bracelet"]
 
         self.Done=False
 
@@ -480,15 +488,15 @@ class Event:
                 time.sleep(3)
                 print("You have killed the king, but for what.")
                 time.sleep(3)
-                print("All he ever wanted was a freind.")
+                print("All he ever wanted was a friend.")
                 time.sleep(3)
-                print("He had started to think that maybe you were a freind.")
+                print("He had started to think that maybe you were a friend.")
                 time.sleep(3)
                 print("You think that he needed you to go on those quests?")
                 time.sleep(3)
                 print("No.")
                 time.sleep(3)
-                print("He just wanted to build a freindship.")
+                print("He just wanted to build a friendship.")
                 time.sleep(3)
                 print("And you killed him.")
                 time.sleep(3)
@@ -503,7 +511,7 @@ class Event:
 
                 print("Congratulations, you fended off the Goblins!")
                 print("They came from the forest up above, so you might want to go check that out.")
-                print("Type '(w)alk forest' to go to the forest. \n")
+                print("Type '(w)alk' to go to the forest. \n")
                 B.locations+=["forest"]
                 self.body=[False,True]
 

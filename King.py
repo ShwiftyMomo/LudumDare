@@ -11,6 +11,10 @@ class King:
 		self.xp=1000
 
 	def talk(self,P,B):
+
+		if P.weapon=="Friendship Bracelet":
+			self.ending()
+
 		if B.events[2].body==[False,True] or B.events[3].body==[False,True]:
 			print("Goblin King: Back for another quest I see")
 
@@ -20,13 +24,26 @@ class King:
 
 		print("\n")
 		print("Goblin King: Here are my pacts \n")
+
 		for deal in self.deals:
 			print(Pact(deal))
 			print("")
 
 		print("Goblin King: Type the name of the quest/pact you want.")
 		print("Goblin King: Or just move on if you dont want anything.\n")
-		move=input()
+
+		move = input()
+
+		Temp=[]
+		for word in move.split(" "):
+			Temp+=[word[0].upper()+word[1:]]
+
+		move=""
+
+		for word in Temp:
+			move+=word+" "
+
+		move=move[:-1]
 
 		if move in self.deals:
 			Pact(move).run(P)
@@ -37,14 +54,15 @@ class King:
 			if move=="Clean Garden":
 				B.events[2].body[0]=True
 				B.locations+=["garden"]
-
+				self.quests.remove("Clean Garden")
+				print("You have decided to embark on the 'Clean Garden' quest!\n")
 
 			if move=="Get Crown":
 				B.events[3].body[0]=True
 				B.locations+=["forge"]
+				self.quests.remove("Get Crown")
+				print("You have decided to embark on the 'Get Crown' quest!\n")
 
-			self.quests.remove(move)
-			print("You have decided to embark on the '"+move+"' quest!\n")
 		B.events[1].body=[False,True]
 
 	def Attack(self,P):
