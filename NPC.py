@@ -74,9 +74,9 @@ class NPC:
 
 			if Op1==2:
 				print("Gardener: I think he's overcompensating for a lack of close friendships.")
-				print("Gardener: Perhaps you could become his freind and heal the hole in his heart.")
-				O1="How could I befreind him?"
-				O2="Have you tried befreinding him yourself?"
+				print("Gardener: Perhaps you could become his friend and heal the hole in his heart.")
+				O1="How could I befriend him?"
+				O2="Have you tried befriending him yourself?"
 				O3="Cool."
 				Op2=self.ask([O1,O2,O3])
 

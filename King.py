@@ -13,7 +13,7 @@ class King:
 	def talk(self,P,B):
 
 		if P.weapon=="Friendship Bracelet":
-			self.ending()
+			B.ending()
 
 		if B.events[2].body==[False,True] or B.events[3].body==[False,True]:
 			print("Goblin King: Back for another quest I see")

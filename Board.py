@@ -41,14 +41,14 @@ class Board:
             if move == "info" or move == "i":
                 self.Info(P)
 
-            if move.split(" ")[0] == "examine" or move.split(" ")[0] == "x":
-                self.Examine(P,move)
+            if move == "examine" or move == "x":
+                self.Examine(P)
 
             if move == "quit" or move == "q":
                 self.Quit(P)
 
-            if move.split(" ")[0] == "use" or move.split(" ")[0] == "u":
-                self.Use(P,move)
+            if move == "use" or move == "u":
+                self.Use(P)
 
             if move == "walk" or move == "w":
                 self.Walk(P)
@@ -62,8 +62,8 @@ class Board:
             if move == "dive" or move == "d":
                 self.Dive(P)
 
-            if move.split(" ")[0] == "equip" or move.split(" ")[0] == "e":
-                self.Equip(P,move)
+            if move == "equip" or move == "e":
+                self.Equip(P)
 
             for event in self.events:
                 if event.body==[False,False]:
@@ -79,12 +79,11 @@ class Board:
         I="(h)elp: see all possible actions \n"
         I+="(l)ocation: see current location \n"
         I+="(i)nfo: see all your stats \n"
-        I+="e(x)amine + item: examine an item you possess \n"
-        I+="e(x)amine + enemy: examine an enemy you are fighting \n"
+        I+="e(x)amine: examine an item you possess \n"
         I+="(a)ttack: attack enemies \n"
         I+="(q)uit: leave the game \n"
-        I+="(u)se + consumable: consume the consumable \n"
-        I+="(e)quip + item: set item to your active item \n"
+        I+="(u)se: consume a consumable \n"
+        I+="(e)quip: set an to your active item \n"
         if self.events[0].body!=[False,False]:
             I+="(w)alk: change location \n"
             I+="(t)alk: talk to whoever is in your location \n"
@@ -184,8 +183,26 @@ class Board:
         print(P)
         self.Done=False
 
-    def Examine(self,P,move):
-        if len(move.split(" ")) !=1:
+    def Examine(self,P):
+        print("Items:")
+        for i in P.items:
+            print("\t"+i)
+        print("\t"+P.weapon)
+        print("\t"+P.armor+"\n")
+
+        move=input()
+
+        Str=""
+
+        for i in move.split(" "):
+            Str+=i[0].upper()+i[1:]+" "
+
+        Str=Str[:-1]
+
+        while Str not in P.items and Str!=P.weapon and Str!=P.armor:
+            print("That is not one of your items.\n")
+            move=input()
+
             Str=""
 
             for i in move.split(" ")[1:]:
@@ -193,21 +210,28 @@ class Board:
 
             Str=Str[:-1]
 
-            if Str in P.items or Str==P.weapon or Str==P.armor:
-                print(str(Item(Str))+"\n")
-                self.Done=False
-
-            if Str in [enemy.name for enemy in self.enemies]:
-                print(str(self.enemies[[enemy.name for enemy in self.enemies].index(Str)])+"\n")
-                self.Done=False
+        print(str(Item(Str))+"\n")
+        self.Done=False
 
     def Quit(self,P):
         print("Thanks for having played my game!")
         self.Done=False
         exit()
 
-    def Use(self,P,move):
-        if len(move.split(" ")) !=1:
+    def Use(self,P):
+        move=input()
+
+        Str=""
+
+        for i in move.split(" "):
+            Str+=i[0].upper()+i[1:]+" "
+
+        Str=Str[:-1]
+
+        while Str not in P.consumables:
+            print("That is not one of your consumables.\n")
+            move=input()
+
             Str=""
 
             for i in move.split(" ")[1:]:
@@ -215,40 +239,39 @@ class Board:
 
             Str=Str[:-1]
 
-            if Str in P.consumables:
-                P.consumables.remove(Str)
-                P.items.remove(Str)
+        P.consumables.remove(Str)
+        P.items.remove(Str)
 
-                if Item(Str).effect[0]=="hp":
-                    I="hp"
+        if Item(Str).effect[0]=="hp":
+            I="hp"
 
-                    num=Item(Str).effect[1]
+            num=Item(Str).effect[1]
 
-                    P.hp+=num
+            P.hp+=num
 
-                    if P.hp>P.hpMax:
-                        P.hp=P.hpMax
+            if P.hp>P.hpMax:
+                P.hp=P.hpMax
 
-                if Item(Str).effect[0]=="hpMax":
-                    I="Maximum hp"
+        if Item(Str).effect[0]=="hpMax":
+            I="Maximum hp"
 
-                    num=Item(Str).effect[1]
+            num=Item(Str).effect[1]
 
-                    P.hpMax+=num
+            P.hpMax+=num
 
-                if num>0:
-                    I+=" increased by "
+        if num>0:
+            I+=" increased by "
 
-                if num<0:
-                    I+=" decreased by "
+        if num<0:
+            I+=" decreased by "
 
-                I+= str(abs(num))
+        I+= str(abs(num))
 
-                I+="."
+        I+="."
 
-                print(I)
+        print(I)
 
-                self.Done=False
+        self.Done=False
 
     def Walk(self,P):
         I="Locations: \n"
@@ -343,32 +366,44 @@ class Board:
 
         self.Done=False
 
-    def Equip(self,P,move):
-        if len(move.split(" ")) !=1:
+    def Equip(self,P):
+        move=input()
+
+        Str=""
+
+        for i in move.split(" "):
+            Str+=i[0].upper()+i[1:]+" "
+
+        Str=Str[:-1]
+
+        while Str not in P.items:
+            print("That is not of of your non-equiped items!")
+
+            move=input()
+
             Str=""
 
-            for i in move.split(" ")[1:]:
+            for i in move.split(" "):
                 Str+=i[0].upper()+i[1:]+" "
 
             Str=Str[:-1]
 
-            if Str in P.items:
-                if Item(Str).mode=="weapon":
-                    P.items+=[P.weapon]
-                    P.items.remove(Str)
-                    P.weapon=Str
-                    print("You equiped '"+Str+"'!")
+        if Item(Str).mode=="weapon":
+            P.items+=[P.weapon]
+            P.items.remove(Str)
+            P.weapon=Str
+            print("You equiped '"+Str+"'!")
 
-                if Item(Str).mode=="armor":
-                    P.items+=[P.armor]
-                    P.items.remove(Str)
-                    P.armor=Str
-                    print("You equiped '"+Str+"'!")
+        if Item(Str).mode=="armor":
+            P.items+=[P.armor]
+            P.items.remove(Str)
+            P.armor=Str
+            print("You equiped '"+Str+"'!")
 
-                if Item(Str).mode=="consumable":
-                    print("You cannot equip consumables")
+        if Item(Str).mode=="consumable":
+            print("You cannot equip consumables")
 
-                self.Done=False
+        self.Done=False
 
     def Dive(self,P):
         if P.pos!="ocean":
@@ -520,6 +555,7 @@ class Event:
             if B.enemies==[] and B.Gardener.stage==3:
                 print("Gardener: Thank you for Cleaning my plants!")
                 print("Gardener: As a reward, you can have my healing Potions!")
+                B.locations+=["ocean"]
                 P.consumables+=["Healing Potion","Healing Potion"]
                 P.items+=["Healing Potion","Healing Potion"]
                 print("You have completed the 'Clean Garden' quest!")
