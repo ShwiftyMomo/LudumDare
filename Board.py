@@ -219,6 +219,11 @@ class Board:
         exit()
 
     def Use(self,P):
+        print("Items:")
+        for i in P.consumables:
+            print("\t"+i)
+        print("")
+
         move=input()
 
         Str=""
@@ -234,10 +239,11 @@ class Board:
 
             Str=""
 
-            for i in move.split(" ")[1:]:
+            for i in move.split(" "):
                 Str+=i[0].upper()+i[1:]+" "
 
             Str=Str[:-1]
+
 
         P.consumables.remove(Str)
         P.items.remove(Str)
@@ -281,33 +287,33 @@ class Board:
         print(I)
 
         if self.enemies !=[]:
-            print("You can't run away from a fight!")
+            print("You can't run away from a fight! \n")
 
         else:
             Enem=input().lower()
 
             while Enem not in self.locations:
-                print("That isn't a possible location.")
+                print("That isn't a possible location.\n")
                 Enem=input().lower()
 
             P.pos=Enem
-            print("You moved to the "+Enem+".")
+            print("You moved to the "+Enem+".\n")
 
             if Enem == "ocean":
                 self.person=[]
-                print("The ocean is large and blue.")
+                print("The ocean is large and blue.\n")
                 if self.events[5].body==[False,False]:
                     self.events[5].body=[False,True]
 
             if Enem == "mountain":
                 self.person=[]
-                print("The mountain is tall and cold.")
+                print("The mountain is tall and cold.\n")
                 if self.events[4].body==[False,False]:
                     self.events[4].body=[False,True]
             if Enem == "desert":
                 self.person=[self.Worker]
                 print("The desert is hot and sweaty.")
-                print("There is a Worker goblin hard at work")
+                print("There is a Worker goblin hard at work\n")
 
             if Enem == "forge":
                 print("The forge is hot and fiery.")
@@ -316,6 +322,7 @@ class Board:
                     print("There is a Blacksmith hard at work")
                 else:
                     self.person=[]
+                print("\n")
 
             if Enem == "garden":
                 print("The garden is nice are welcoming.")
@@ -324,13 +331,14 @@ class Board:
                     print("There is a Gardener tending to their plants.")
                 else:
                     self.person=[]
+                print("\n")
             if Enem=="forest":
                 self.person=[self.King]
-                print("The forest is dark and gloomy.")
+                print("The forest is dark and gloomy.\n")
 
             if Enem=="start":
                 self.person=[]
-                print("You see an easter egg on the ground.")
+                print("You see an easter egg on the ground.\n")
 
             self.Done=False
 
@@ -367,6 +375,10 @@ class Board:
         self.Done=False
 
     def Equip(self,P):
+        print("Items:")
+        for i in P.items:
+            print("\t"+i)
+        print("")
         move=input()
 
         Str=""
@@ -377,7 +389,7 @@ class Board:
         Str=Str[:-1]
 
         while Str not in P.items:
-            print("That is not of of your non-equiped items!")
+            print("That is not of of your non-equiped items!\n")
 
             move=input()
 
@@ -418,6 +430,7 @@ class Board:
                     if P.job!="Bard":
                         P.die()
                     else:
+                        print("\n")
                         time.sleep(1)
                         print("Desire and")
                         time.sleep(1)
@@ -432,7 +445,7 @@ class Board:
                         print("--Ernest Hemmingway")
                         time.sleep(1)
                         print("\n")
-                        time.sleep(5)
+                        time.sleep(1)
                         print("WAIT!")
                         time.sleep(1)
                         print("A group of Mer-People save you.")
@@ -458,9 +471,9 @@ class Board:
 
     def ending(self):
         print("\n")
-        print("The goblin king has a matching freindship bracelet!")
+        print("The goblin king has a matching friendship bracelet!")
         time.sleep(3)
-        print("Goblin King: That... That's my best freind's bracelet.")
+        print("Goblin King: That... That's my best friend's bracelet.")
         time.sleep(3)
         print("The Goblin King gives you a big hug.")
         time.sleep(3)

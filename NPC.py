@@ -53,13 +53,17 @@ class NPC:
 				print("Gardener: Oh, a new face!")
 				print("Gardener: It was getting boring with just my dirty plants.")
 
-			if self.stage ==2 or self.stage ==3:
+			if self.stage >1:
 				print("Gardener: What do you want to talk about?")
 
 			O1="Why are your plants dirty?"
 			O2="What's up with the Goblin King?"
 			O3="What is the meaning of life?"
-			Op1=self.ask([O1,O2,O3])
+			if P.hp>15:
+				Op1=self.ask([O1,O2,O3])
+			else:
+				O4="I need a healing STAT!"
+				Op1=self.ask([O1,O2,O3,O4])
 
 			if Op1==1:
 				print("Gardener: A couple of mandrakes made my garden their home.")
@@ -168,6 +172,12 @@ class NPC:
 						O2="Yes."
 						O3="Dude, that's deep."
 						Op3=self.ask([O1,O2,O3])
+
+			if Op1==4:
+				print("Gardener: Sure thing!")
+				print("The Gardener heals you to 30hp.")
+				P.hp=30
+
 
 		if self.name=="Blacksmith":
 			if self.stage ==1:

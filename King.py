@@ -34,34 +34,35 @@ class King:
 
 		move = input()
 
-		Temp=[]
-		for word in move.split(" "):
-			Temp+=[word[0].upper()+word[1:]]
+		if move!="":
+			Temp=[]
+			for word in move.split(" "):
+				Temp+=[word[0].upper()+word[1:]]
 
-		move=""
+			move=""
 
-		for word in Temp:
-			move+=word+" "
+			for word in Temp:
+				move+=word+" "
 
-		move=move[:-1]
+			move=move[:-1]
 
-		if move in self.deals:
-			Pact(move).run(P)
-			print("You got the pact '"+move+"'!")
+			if move in self.deals:
+				Pact(move).run(P)
+				print("You got the pact '"+move+"'!")
 
-		if move in self.quests:
+			if move in self.quests:
 
-			if move=="Clean Garden":
-				B.events[2].body[0]=True
-				B.locations+=["garden"]
-				self.quests.remove("Clean Garden")
-				print("You have decided to embark on the 'Clean Garden' quest!\n")
+				if move=="Clean Garden":
+					B.events[2].body[0]=True
+					B.locations+=["garden"]
+					self.quests.remove("Clean Garden")
+					print("You have decided to embark on the 'Clean Garden' quest!\n")
 
-			if move=="Get Crown":
-				B.events[3].body[0]=True
-				B.locations+=["forge"]
-				self.quests.remove("Get Crown")
-				print("You have decided to embark on the 'Get Crown' quest!\n")
+				if move=="Get Crown":
+					B.events[3].body[0]=True
+					B.locations+=["forge"]
+					self.quests.remove("Get Crown")
+					print("You have decided to embark on the 'Get Crown' quest!\n")
 
 		B.events[1].body=[False,True]
 

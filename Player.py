@@ -72,6 +72,7 @@ class Player:
         print("Your health increased by 10!\n")
 
     def die(self):
+        print("\n")
         time.sleep(1)
         print("Desire and")
         time.sleep(1)
