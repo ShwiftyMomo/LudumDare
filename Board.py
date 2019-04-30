@@ -84,15 +84,10 @@ class Board:
         I+="(q)uit: leave the game \n"
         I+="(u)se: consume a consumable \n"
         I+="(e)quip: set an to your active item \n"
-        if self.events[0].body!=[False,False]:
-            I+="(w)alk: change location \n"
-            I+="(t)alk: talk to whoever is in your location \n"
-
-        if self.events[4].body==[False,True]:
-            I+="(s)pelunk: explore cave \n"
-
-        if self.events[5].body==[False,True]:
-            I+="(d)ive: explore ocean \n"
+        I+="(w)alk: change location \n"
+        I+="(t)alk: talk to whoever is in your location \n"
+        I+="(s)pelunk: explore cave \n"
+        I+="(d)ive: explore ocean \n"
 
         print(I)
         self.Done=False
@@ -579,7 +574,7 @@ class Event:
             if B.enemies==[] and B.Blacksmith.stage==3:
                 print("Blacksmith: I guess I'll give you the Crown now.")
                 print("Blacksmith: As a bonus, I'll give you better gear.")
-                print("Blacksmith: Type '(b)estow' then an item to make it your active item.\n")
+                print("Blacksmith: Type '(e)quip' then an item to make it your active item.\n")
                 B.locations+=["mountain"]
                 P.items+=["Medium Armor","Axe"]
                 print("You have completed the 'Get Crown' quest!")
