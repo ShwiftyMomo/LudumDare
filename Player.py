@@ -32,7 +32,7 @@ class Player:
 
         while Job(MyJob).dmg==None:
             print("Sorry, that isn't a possible class. \n")
-            MyJob=input("Which class do you want to be? ")
+            MyJob=input("Which class do you want to be? ").lower()
 
         MyJob=Job(MyJob)
 
@@ -102,4 +102,3 @@ class Player:
         for item in self.items:
             I+= "\t" + item + "\n"
         return I
-        

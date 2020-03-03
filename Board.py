@@ -15,6 +15,7 @@ class Board:
         self.Gardener=NPC("Gardener")
         self.Blacksmith=NPC("Blacksmith")
         self.Worker=NPC("Worker")
+        self.ChatBot=NPC("ChatBot")
 
     def turn(self,P):
         print("\n")
@@ -112,6 +113,11 @@ class Board:
             I+="\n"
 
             Enem = input(I)
+
+            if Enem=="":
+                self.Done=False
+                return
+
             Temp=[]
             for word in Enem.split(" "):
                 Temp+=[word[0].upper()+word[1:]]
@@ -132,7 +138,7 @@ class Board:
                 Enem=""
                 for word in Temp:
                     Enem+=word+" "
-                    
+
                 Enem=Enem[:-1]
 
             if Enem in [enemy.name for enemy in self.enemies]:
@@ -187,6 +193,9 @@ class Board:
 
         move=input()
 
+        if len(move.split(" "))<1:
+            self.Done=False
+            return
         Str=""
 
         for i in move.split(" "):
@@ -220,6 +229,10 @@ class Board:
         print("")
 
         move=input()
+
+        if len(move.split(" "))<1:
+            self.Done=False
+            return
 
         Str=""
 
@@ -305,6 +318,7 @@ class Board:
                 print("The mountain is tall and cold.\n")
                 if self.events[4].body==[False,False]:
                     self.events[4].body=[False,True]
+
             if Enem == "desert":
                 self.person=[self.Worker]
                 print("The desert is hot and sweaty.")
@@ -327,13 +341,18 @@ class Board:
                 else:
                     self.person=[]
                 print("\n")
+
             if Enem=="forest":
                 self.person=[self.King]
                 print("The forest is dark and gloomy.\n")
 
             if Enem=="start":
-                self.person=[]
-                print("You see an easter egg on the ground.\n")
+                if self.ChatBot.hp>0:
+                    self.person=[self.ChatBot]
+                else:
+                    self.person=[]
+                print("The start is bright and cheery.\n")
+                print("There is a ChatBot waiting to talk.")
 
             self.Done=False
 
@@ -375,8 +394,10 @@ class Board:
             print("\t"+i)
         print("")
         move=input()
-
         Str=""
+        if len(move.split(" "))<1:
+            self.Done=False
+            return
 
         for i in move.split(" "):
             Str+=i[0].upper()+i[1:]+" "
@@ -546,6 +567,7 @@ class Event:
                 print("I hope you're happy with you 'decision'.")
                 time.sleep(3)
                 exit()
+
     def run(self,move,B,P):
 
         if self.name=="Start":
@@ -579,4 +601,3 @@ class Event:
                 P.items+=["Medium Armor","Axe"]
                 print("You have completed the 'Get Crown' quest!")
                 self.body=[False,True]
-
